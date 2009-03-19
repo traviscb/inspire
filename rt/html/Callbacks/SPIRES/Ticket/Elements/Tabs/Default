@@ -1,0 +1,19 @@
+<%INIT>
+if($Ticket && $Ticket->QueueObj->Name=~/SPIRES-HEP/ && $Ticket->Status ne 
+'resolved') 
+#if($Ticket)
+{
+$actions->{'just-resolve'} = { title => loc('Quick Resolve'),
+path => 'spires/JustResolve.html?id='.$Ticket->id };
+} 
+
+
+
+</%INIT>
+<%ARGS>
+$Ticket => undef;
+$tabs => undef;
+$actions => undef;
+</%ARGS>
+
+

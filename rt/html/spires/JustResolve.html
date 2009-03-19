@@ -1,0 +1,34 @@
+
+<%INIT>
+
+my $TicketObj = LoadTicket($id);
+
+
+my $reply = ' 
+Thank you for the update.  We believe that this information has been 
+corrected in SPIRES, and will be searchable within a day or two,
+depending on the site that you use.  
+
+Please feel free to create another request for any further corrections
+or comments you may have about the databases, or reply to this message
+if this request is not resolved to your satisfaction.
+
+Best Regards,
+'.$TicketObj->OwnerObj->FriendlyName.'
+
+------------- Your Initial Request ----------------
+
+
+'.$TicketObj->Transactions->First->Content;
+
+$TicketObj->Correspond(Content => $reply);
+$TicketObj->Resolve;
+$m->comp('/Ticket/Display.html', id => $id);
+
+return;
+
+</%INIT>
+
+<%ARGS>
+$id => undef
+</%ARGS> 
