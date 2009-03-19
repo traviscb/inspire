@@ -1,6 +1,6 @@
 include config.mk
 
-SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf
+SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf rt
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -62,3 +62,6 @@ load-large-sample-of-records:
 
 load-full-sample-of-records:
 	(cd bibconvert && make load-full-sample-of-records)
+
+rt:
+	cd rt && make && cd ..
