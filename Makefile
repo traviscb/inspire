@@ -1,6 +1,6 @@
 include config.mk
 
-SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf rt
+SUBDIRS = bibconvert bibedit bibformat webstyle kbs bibrank conf rt
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -10,15 +10,8 @@ test:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make test && cd .. ;)
 	@echo "Done.  Please run make install now."
 
-reset-inspire-test-site-field-configuration:
-	echo "UPDATE tag SET value='773__%' WHERE name='journal'" | $(BINDIR)/dbexec
-	echo "UPDATE tag SET value='260__c' WHERE name='year'" | $(BINDIR)/dbexec
-	echo "UPDATE tag SET value='693__e' WHERE name='experiment'" | $(BINDIR)/dbexec
-	echo "REPLACE INTO field VALUES (50, 'collaboration', 'collaboration')" | $(BINDIR)/dbexec
-	echo "REPLACE INTO tag VALUES (200, 'collaboration', '710__g')" | $(BINDIR)/dbexec
-	echo "REPLACE INTO field_tag VALUES (50, 200, 100)" | $(BINDIR)/dbexec
 
-install: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
+install: reset-inspire-test-site-collection-configuration
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
 	@echo "Done.  You may want to copy $(ETCDIR)/invenio-local.conf-example to $(ETCDIR)/invenio-local.conf, edit commented parts, run inveniocfg --update-all --reset-all and restart Apache now."
 
