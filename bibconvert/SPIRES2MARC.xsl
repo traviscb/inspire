@@ -218,6 +218,15 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:text>
 </xsl:text>
                 </xsl:for-each>
+                <xsl:for-each select="./hidden-note">
+		  <xsl:if test="string(normalize-space(./hidden-note))"> 
+                    <datafield tag="595" ind1=" " ind2=" ">
+                        <subfield code="a"><xsl:value-of select="."/></subfield>
+                    </datafield>
+                  </xsl:if>
+<xsl:text>
+</xsl:text>
+                </xsl:for-each>
                 <xsl:if test="./report-cancel">
                     <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="c">DELETED</subfield>
