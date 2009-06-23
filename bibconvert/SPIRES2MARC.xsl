@@ -365,6 +365,18 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:text>
 </xsl:text>
 	             </xsl:for-each>
+
+  		    <xsl:for-each select="./hidden-note">
+                   <!--do not print tags for empty values-->
+                    <xsl:if test="string(.)">
+        	     	<datafield tag="595" ind1=" " ind2=" ">
+                    	    <subfield code="a"><xsl:value-of select="."/></subfield>
+		        	<subfield code="9">arxiv</subfield>              	
+		    	</datafield>
+                     </xsl:if>
+<xsl:text>
+</xsl:text>
+	             </xsl:for-each>
                 </xsl:for-each>
                 <xsl:for-each select="./url-str">
                    <!--do not print tags for empty values-->

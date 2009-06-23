@@ -54,4 +54,8 @@ upload:
 	$(BINDIR)/bibupload -ir inst.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
+load-all-records: get convert test-with-xmllint upload
+
 # end of file
+
+

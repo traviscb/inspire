@@ -118,14 +118,16 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </xsl:if>
 
 
-                </xsl:for-each>
-                </datafield>
+
                
                 <!--add collection id-->
                 <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="a">CONFERENCES</subfield>
                 </datafield>
+
+		</xsl:for-each>
             </record>
+
 <xsl:text>
 </xsl:text>
            

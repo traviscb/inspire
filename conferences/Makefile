@@ -32,6 +32,14 @@ utf8:
 	mv conf.xml confn.xml
 	iconv -fLatin1 -tUTF8 confn.xml > conf.xml
 	rm -f confn.xml
+
+
+	perl -i.bk -pe 's/[^[:ascii:]]//g;' conf.xml
+	cat conf.xml | tr -d "\000-\011" | tr -d "\013-\014"| tr -d "\016-\037" > conf.x
+	mv  conf.x conf.xml
+	@echo "Please see clean-spires-data.sh if your input contains broken tags"
+
+
 	@echo "* Done.  Please run 'make convert' now."
 
 convert:
