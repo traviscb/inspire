@@ -16,14 +16,14 @@ install:
 
 # targets working with big SPIRES dump files follow:
 
+
+
+
 get:
 	@echo "* Downloading large file from SLAC FTP server, please be patient..."
 	wget $(SPIRESXML)
 	rm -f ./conf.xml
 	gunzip ./conf.xml.gz
-	#  Please note, bibconvert and xmllint appear to fail on this large file.  
-	#  It may be neccessary to use a different xslt engine or break up the 
-	#  file.
 	@echo "* Done.  Please run 'make utf8' now."
 
 
@@ -61,5 +61,12 @@ upload:
 	@echo "* Uploading converted files..."
 	$(BINDIR)/bibupload -ir conf.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+supload:
+	@echo "* Uploading converted files..."
+	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir conf.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+load-all-records: get utf8 convert test-with-xmllint supload
 
 # end of file

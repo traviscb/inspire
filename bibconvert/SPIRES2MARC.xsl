@@ -12,8 +12,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 </xsl:text>
             <record>
                 <xsl:if test="string(./doc-type)">
-                    <datafield tag="690" ind1="C" ind2=" ">
+                    <datafield tag="694" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="./doc-type"/></subfield>
+                        <subfield code="9">SPIRES DOCTYPE</subfield>
                     </datafield>
 <xsl:text>
 </xsl:text>
@@ -172,18 +173,54 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 </xsl:if>
                 <xsl:if test="string(./language)">
                     <datafield tag="041" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="./language"/></subfield>
+                         <subfield code="a"><xsl:value-of select="./language"/></subfield>
                     </datafield>
 <xsl:text>
 </xsl:text>
                 </xsl:if>
+
                 <xsl:if test="string(./ppf-subject)">
-                    <datafield tag="650" ind1="1" ind2="7">
-                        <subfield code="a"><xsl:value-of select="./ppf-subject"/></subfield>
+                    <datafield tag="694" ind1=" " ind2=" ">
+				<xsl:call-template name="output-tokens">
+					<xsl:with-param name="list"><xsl:value-of select="./ppf-subject"/></xsl:with-param>
+					<xsl:with-param name="delimiter">, </xsl:with-param>
+					<xsl:with-param name="code">a</xsl:with-param>
+				</xsl:call-template>
+                        <subfield code="9">SPIRES SCL</subfield>
                     </datafield>
+
 <xsl:text>
 </xsl:text>
                 </xsl:if>
+
+                <xsl:if test="string(./field-code)">
+                    <datafield tag="694" ind1=" " ind2=" ">
+				<xsl:call-template name="output-tokens">
+					<xsl:with-param name="list"><xsl:value-of select="./field-code"/></xsl:with-param>
+					<xsl:with-param name="delimiter">, </xsl:with-param>
+					<xsl:with-param name="code">a</xsl:with-param>
+				</xsl:call-template>
+                        <subfield code="9">SPIRES FC</subfield>
+                    </datafield>
+
+<xsl:text>
+</xsl:text>
+                </xsl:if>
+                <xsl:if test="string(./type-code)">
+                    <datafield tag="694" ind1=" " ind2=" ">
+				<xsl:call-template name="output-tokens">
+					<xsl:with-param name="list"><xsl:value-of select="./type-code"/></xsl:with-param>
+					<xsl:with-param name="delimiter">, </xsl:with-param>
+					<xsl:with-param name="code">a</xsl:with-param>
+				</xsl:call-template>
+                        <subfield code="9">SPIRES TC</subfield>
+                    </datafield>
+
+<xsl:text>
+</xsl:text>
+                </xsl:if>
+
+
                 <xsl:if test="string(./p)">
                     <datafield tag="300" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="./p"/></subfield>
@@ -371,7 +408,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     <xsl:if test="string(.)">
         	     	<datafield tag="595" ind1=" " ind2=" ">
                     	    <subfield code="a"><xsl:value-of select="."/></subfield>
-		        	<subfield code="9">arxiv</subfield>              	
+		        	<subfield code="9">SPIRES HN</subfield>              	
 		    	</datafield>
                      </xsl:if>
 <xsl:text>
@@ -446,5 +483,45 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     </collection>
 
 </xsl:template>
+
+
+
+<xsl:template name="output-tokens">
+<xsl:param name="list"/>
+<xsl:param name="delimiter"/>
+<xsl:param name="code"/>
+<xsl:variable name="newlist">
+<xsl:choose>
+<xsl:when test="contains($list, $delimiter)">
+<xsl:value-of select="normalize-space($list)"/>
+</xsl:when>
+<xsl:otherwise>
+<xsl:value-of select="concat(normalize-space($list), $delimiter)"/>
+</xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
+<xsl:variable name="first" select="substring-before($newlist, $delimiter)"/>
+<xsl:variable name="remaining" select="substring-after($newlist, $delimiter)"/>
+<subfield>
+<xsl:attribute name = "code">
+<xsl:value-of select="$code"/>
+</xsl:attribute>
+<xsl:value-of select="$first"/>
+</subfield>
+<xsl:if test="$remaining">
+<xsl:call-template name="output-tokens">
+<xsl:with-param name="list" select="$remaining"/>
+<xsl:with-param name="delimiter">
+<xsl:value-of select="$delimiter"/>
+</xsl:with-param>
+<xsl:with-param name="code">
+<xsl:value-of select="$code"/>
+</xsl:with-param>
+</xsl:call-template>
+</xsl:if>
+</xsl:template>
+
+
+
 
 </xsl:stylesheet>

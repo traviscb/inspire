@@ -2,6 +2,7 @@
 
 include ../config.mk
 
+
 XSLFILES = inst2marc.xsl
 SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/inst.xml.gz
 
@@ -54,7 +55,12 @@ upload:
 	$(BINDIR)/bibupload -ir inst.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
-load-all-records: get convert test-with-xmllint upload
+supload:
+	@echo "* Uploading converted files..."
+	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir inst.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+load-all-records: get convert test-with-xmllint supload
 
 # end of file
 

@@ -7,3 +7,5 @@ LIBDIR = $(PREFIX)/lib
 WEBDIR = $(PREFIX)/var/www
 
 INSTALL = install -g apache -m 775
+
+BIBSCHED_PROCESS_USER = apache

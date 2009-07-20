@@ -9,7 +9,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <record>
                 <xsl:if test="./mconf">
                     <datafield tag="970" ind1=" " ind2=" ">
-                        <subfield code="a">CONF-<xsl:value-of select="./conf"/></subfield>
+                        <subfield code="a">CONF-<xsl:value-of select="./mconf"/></subfield>
                     </datafield>
                 </xsl:if>
 
@@ -118,14 +118,14 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </xsl:if>
 
 
-
+		</xsl:for-each>
                
                 <!--add collection id-->
                 <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="a">CONFERENCES</subfield>
                 </datafield>
 
-		</xsl:for-each>
+
             </record>
 
 <xsl:text>

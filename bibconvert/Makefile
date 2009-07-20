@@ -16,11 +16,11 @@ all:
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 
-load-small-sample-of-records: get-small convert-small upload-small
+load-small-sample-of-records: get-small convert-small supload-small
 
-load-large-sample-of-records: get-large clean-large split-large convert-large upload
+load-large-sample-of-records: get-large clean-large split-large convert-large supload-large
 
-load-full-sample-of-records: get-full clean-large split-large convert-large upload
+load-full-sample-of-records: get-full clean-large split-large convert-large supload
 
 # helper targets:
 
@@ -101,6 +101,20 @@ upload-large:
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
+supload-small:
+	@echo "* Uploading converted files..."
+	cp SPIRES_small_sample.marcxml /tmp
+	chmod a+r /tmp/SPIRES_small_sample.marcxml
+	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/SPIRES_small_sample.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+supload-large:
+	@echo "* Uploading converted files..."
+	for file in large_test.xml_*[0-9].marcxml; do \
+	    sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir $${file}; \
+        done
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 
 convert-SPIRES:
 	@echo "* Converting split files, please be patient..."
@@ -129,6 +143,13 @@ upload:
 	@echo "* Uploading converted files..."
 	for file in SPIRES_*.xml_*[0-9].marcxml; do \
 	    $(BINDIR)/bibupload -ir $${file}; \
+        done
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+supload:
+	@echo "* Uploading converted files..."
+	for file in SPIRES_*.xml_*[0-9].marcxml; do \
+	    sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
