@@ -56,6 +56,13 @@ Set($Timezone , 'US/Pacific');
 
 # }}}
 
+
+# By default, RT shows newest transactions at the bottom of the ticket
+# history page, if you want see them at the top set this to '0'.
+
+Set($OldestTransactionsFirst, '1');
+
+
 # {{{ Database Configuration
 
 # Database driver beeing used. Case matters
