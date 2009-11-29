@@ -73,14 +73,16 @@
 %#  <tr>
      <td>                                			</td> 
       <td>                                			</td>
-%#      <td class="label"><&|/l&>Status</&>:</td> 
-%#      <td class="value"><%$SelectStatus|n%></td>
+      <td class="label"><&|/l&>Status</&>:</td> 
+      <td class="value"><%$SelectStatus|n%></td>
 
       <td class="label"><&|/l&>Priority</&>:</td>
       <td class="value"><input name="Priority" value="<%$Ticket->Priority|h%>" size="2" /></td>
 
 %#      <td class="label"><&|/l&>Due Date</&>:</td>
 %#      <td class="value"><& /Elements/SelectDate, Name =>'Due' &></td>
+
+<input type="hidden" class="hidden" name="id" value="<%$Ticket->Id%>" />
 
      <td>                                </td> 
      <td>                                </td> 

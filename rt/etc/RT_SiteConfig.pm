@@ -39,7 +39,7 @@ Set($rtname , "INSPIRE-HEP");
 # This setting would make RT behave exactly as it does without the 
 # setting enabled.
 #
-# Set($EmailSubjectTagRegex, qr/\Q$rtname\E/i );
+Set($EmailSubjectTagRegex, qr/(?:INSPIRE-HEP|SLAC-TIS)/i );
 
 
 
@@ -60,7 +60,7 @@ Set($Timezone , 'US/Pacific');
 # By default, RT shows newest transactions at the bottom of the ticket
 # history page, if you want see them at the top set this to '0'.
 
-Set($OldestTransactionsFirst, '1');
+Set($OldestTransactionsFirst, '0');
 
 
 # {{{ Database Configuration
@@ -107,7 +107,7 @@ Set($OwnerEmail , 'travis@slac.stanford.edu');
 # RTAddressRegexp is used to make sure RT doesn't add itself as a ticket CC if
 # the setting above is enabled.
 
-Set($RTAddressRegexp , '^support\@inspire[\-\.]hep\.(net|org)$');
+Set($RTAddressRegexp , '^help\@inspire[\-\.]hep\.(net|org)$');
 
 
 
@@ -122,7 +122,7 @@ Set($RTAddressRegexp , '^support\@inspire[\-\.]hep\.(net|org)$');
 # address.
 
 
-Set($CorrespondAddress , 'support@inspire-hep.net');
+Set($CorrespondAddress , 'help@inspire-hep.net');
 Set($CommentAddress , 'rt-comment@inspire-hep.net');
 
 

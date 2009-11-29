@@ -2,7 +2,7 @@
 <%INIT>
 
 my $TicketObj = LoadTicket($id);
-
+my $Actor =  $TicketObj->CurrentUser;
 
 my $reply = ' 
 Thank you for the update.  We believe that this information has been 
@@ -14,7 +14,7 @@ or comments you may have about the databases, or reply to this message
 if this request is not resolved to your satisfaction.
 
 Best Regards,
-'.$TicketObj->OwnerObj->RealName.'
+'.$Actor->RealName.'
 
 ------------- Your Initial Request ----------------
 

@@ -1,0 +1,16 @@
+<%init>
+my $val = $$content;
+use bytes;
+$val =~ s/https?:([\w\/\@\-~%#?=;,.:+]|\&)+[\w\/]/<a href="$&" target="_blank">$&<\/a>/gi;
+$val =~ s/(s?ftp|ftps):[\w\/\.:+\-]+/<a href="$&">$&<\/a>/gi;
+$val =~ s/(mailto:)?([a-zA-Z0-9_\+\-\.]+\@([a-zA-Z0-9][\w\.\+\-]+\.[a-zA-Z]{2,})(\?([\w\/\@\-~%#?=;,.:+]|\&)+[\w\/])?)/<a href="mailto:$2">$&<\/a>/gi;
+$val =~ s/\<((url:\s*)?\w+:[^&<>]+)\>/<<a href="$1" target="_blank">$1<\/a>>/gi;
+$val =~ s/([^>]arXiv:)(\d{4}\.\d{4})/<<a href = "http:\/\/arXiv.org\/abs\/$2" target="_blank">$1$2<\/a>>/gi;
+$val =~ s/([^>]doi:)(\w+)/<<a href = "http:\/\/dx.doi.org\/$2" target="_blank">$1$2<\/a>>/gi;
+$$content = $val;
+
+</%init>
+<%args>
+$content => undef
+</%args>
+
