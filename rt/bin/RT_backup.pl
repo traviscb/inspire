@@ -89,11 +89,12 @@ my $db=$RT::DatabaseName;
 
 my $bu_file="$bu_dir/${db}_bu.sql";
 
-
+$options = "--skip-opt --add-drop-table --add-locks --create-options --quick 
+--extended-insert --set-charset --disable-keys "; 
 
 #Database dump direct to backup dir
 
-$command="/usr/bin/mysqldump --user=$user --password=$pw --opt $db >$bu_file 2> $err_tmp";
+$command="/usr/bin/mysqldump $options --user=$user --password=$pw  $db >$bu_file 2> $err_tmp";
 
 system("$command");
 
