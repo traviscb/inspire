@@ -2,6 +2,8 @@ include ../config.mk
 
 # helper definitions:
 
+TEST_TARGETS = test-large-with-xmllint test-large-with-xmlmarclint
+
 SMALL = http://cdsware.cern.ch/download/invenio-demo-site-files/SPIRES_small_sample.xml.gz
 LARGE = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml.gz
 XSLFILES = SPIRES2MARC.xsl
@@ -11,6 +13,9 @@ SPIRESFILES = SPIRES_pre_1975.xml.gz SPIRES_1975_1984.xml.gz SPIRES_1985_1994.xm
 # main targets:
 
 all:
+	@echo "Done."
+
+test: ${TEST_TARGETS}
 	@echo "Done."
 
 install:
@@ -46,7 +51,7 @@ get-full:
 	#  file.
 	@echo "* Done.  Please run 'make split-large' or 'make clean-large' now."
 
-clean-large:
+clean-large: get-large
 	@echo "* Removing non-ascii chars in large file, please be patient..."
 	perl -i.bk -pe 's/[^[:ascii:]]//g;' large_test.xml
 	cat large_test.xml | tr -d "\000-\011" | tr -d "\013-\014"| tr -d "\016-\037" > large_test.x
@@ -63,7 +68,7 @@ split-large:
 convert-small:
 	$(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < SPIRES_small_sample.xml > SPIRES_small_sample.marcxml
 
-convert-large:
+convert-large: clean-large
 	@echo "* Converting split files, please be patient..."
 	for file in large_test.xml_*[0-9]; do \
 	   echo " ... converting file $${file}..." ;\
@@ -72,7 +77,7 @@ convert-large:
 	@echo "* Done.  Please run 'make test-large-with-xmllint' or 'make test-large-with-xmlmarclint' now."
 
 
-test-large-with-xmllint:
+test-large-with-xmllint: convert-large
 	@echo "* Testing XML correctness of converted files, please be patient..."
 	for file in large_test.xml_*[0-9].marcxml; do \
 	    xmllint --noout $${file}; \
