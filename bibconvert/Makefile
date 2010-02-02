@@ -1,5 +1,7 @@
 include ../config.mk
 
+SMALL_BASE = SPIRES_small_sample
+SMALL_URL = http://cdsware.cern.ch/download/invenio-demo-site-files/${SMALL_BASE}.xml.gz
 LARGE_PATH = /afs/slac/public/groups/library/spires/inspire/test
 LARGE_PATTERN = ????_test_set.xml
 XSLFILES = SPIRES2MARC.xsl
@@ -14,14 +16,25 @@ test: ${TEST_TARGETS}
 	@echo "Done."
 
 clean:
-	@rm -f ${LARGE_PATTERN} ${LARGE_PATTERN}.x ${LARGE_PATTERN}.bk ${LARGE_PATTERN}.marcxml
+	@rm -f ${LARGE_PATTERN} ${LARGE_PATTERN}.x ${LARGE_PATTERN}.bk \
+		   ${LARGE_PATTERN}.marcxml SPIRES_small_sample.xml.gz \
+		   SPIRES_small_sample.xml SPIRES_small_sample.marcxml
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 
+load-small-sample-of-records: get-small convert-small upload-small
 load-large-sample-of-records: get-large clean-large convert-large upload-large
+#load-small-sample-of-records: get-small convert-small supload-small
 
 # helper targets:
+
+get-small:
+	@echo "* Downloading the file please be patient..."
+	wget $(SMALL_URL)
+	@rm -f ./${SMALL_BASE}.xml
+	@gunzip ${SMALL_BASE}.xml.gz
+	@echo "* Done.  Please run 'make convert-small' now."
 
 get-large:
 	@echo -n "* Copying XML files from AFS space, please be patient..."
@@ -37,6 +50,12 @@ clean-large: get-large
 		done
 	@echo "Please see clean-spires-data.sh if your input contains broken tags"
 	@echo "* Done.  Please run 'make convert-large' now."
+
+convert-small: get-small
+	@echo -n "* Converting small SPIRES record sample..."
+	$(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < ${SMALL_BASE}.xml > ${SMALL_BASE}.marcxml
+	@echo -n " done."
+	@echo "Please run 'make upload-small' now."
 
 convert-large: clean-large
 	@echo "* Converting split files, please be patient..."
@@ -72,6 +91,13 @@ test-large-with-xmlmarclint: convert-large
      done
 	@echo "* Done.  Please run 'make upload-large' now."
 
+upload-small: convert-small
+	@echo "* Uploading converted files..."
+	cp ${SMALL_BASE}.marcxml /tmp
+	chmod a+r /tmp/${SMALL_BASE}.marcxml
+	$(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 upload-large: test-large-with-xmlmarclint
 	@echo "* Uploading converted files..."
 	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
@@ -80,6 +106,14 @@ upload-large: test-large-with-xmlmarclint
      done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
+# upload-small that uses sudo internally
+supload-small: convert-small
+	@echo "* Uploading converted files..."
+	cp ${SMALL_BASE}.marcxml /tmp
+	chmod a+r /tmp/${SMALL_BASE}.marcxml
+	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+		
 # upload-large that uses sudo internally
 supload-large: test-large-with-xmlmarclint
 	@echo "* Uploading converted files..."
@@ -93,9 +127,6 @@ supload-large: test-large-with-xmlmarclint
 #################
 # FIXME: Targets below this point have not been verified as correct
 
-SMALL = http://cdsware.cern.ch/download/invenio-demo-site-files/SPIRES_small_sample.xml.gz
-
-load-small-sample-of-records: get-small convert-small supload-small
 load-full-sample-of-records: get-full clean-large convert-large supload-full
 #load-large-sample-of-records: get-large clean-large convert-large supload-large
 
@@ -146,29 +177,6 @@ supload-full:
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
 
-get-small:
-	@echo "* Downloading the file please be patient..."
-	wget $(SMALL)
-	rm -f ./SPIRES_small_sample.xml
-	gunzip SPIRES_small_sample.xml.gz
-
-convert-small:
-	$(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < SPIRES_small_sample.xml > SPIRES_small_sample.marcxml
-
-upload-small:
-	@echo "* Uploading converted files..."
-	cp SPIRES_small_sample.marcxml /tmp
-	chmod a+r /tmp/SPIRES_small_sample.marcxml
-	$(BINDIR)/bibupload -ir /tmp/SPIRES_small_sample.marcxml
-	@echo "* Done.  Please see via 'bibsched' the task progress."
-
-supload-small:
-	@echo "* Uploading converted files..."
-	cp SPIRES_small_sample.marcxml /tmp
-	chmod a+r /tmp/SPIRES_small_sample.marcxml
-	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/SPIRES_small_sample.marcxml
-	@echo "* Done.  Please see via 'bibsched' the task progress."
-		
 convert-SPIRES:
 	@echo "* Converting split files, please be patient..."
 	for file in SPIRES_*.xml_*[0-9]; do \
