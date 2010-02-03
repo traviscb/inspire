@@ -5,7 +5,7 @@ include ../config.mk
 IMGFILES = inspire_logo.gif inspire.css
 LIBFILES = webstyle_templates_inspire.py
 
-all:
+all: 
 	@echo "Done."
 
 test:

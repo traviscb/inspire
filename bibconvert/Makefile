@@ -23,8 +23,8 @@ clean:
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 
-load-small-sample-of-records: get-small convert-small upload-small
-load-large-sample-of-records: get-large clean-large convert-large upload-large
+load-small-sample-of-records: get-small convert-small supload-small
+load-large-sample-of-records: get-large clean-large convert-large supload-large
 #load-small-sample-of-records: get-small convert-small supload-small
 
 # helper targets:
@@ -98,14 +98,6 @@ upload-small: convert-small
 	$(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
-upload-large: test-large-with-xmlmarclint
-	@echo "* Uploading converted files..."
-	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
-		echo "Uploading from " $${file} "..." ;\
-	    $(BINDIR)/bibupload -ir $${file}; \
-     done
-	@echo "* Done.  Please see via 'bibsched' the task progress."
-
 # upload-small that uses sudo internally
 supload-small: convert-small
 	@echo "* Uploading converted files..."
@@ -114,6 +106,14 @@ supload-small: convert-small
 	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 		
+upload-large: test-large-with-xmlmarclint
+	@echo "* Uploading converted files..."
+	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
+		echo "Uploading from " $${file} "..." ;\
+	    $(BINDIR)/bibupload -ir $${file}; \
+     done
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 # upload-large that uses sudo internally
 supload-large: test-large-with-xmlmarclint
 	@echo "* Uploading converted files..."
