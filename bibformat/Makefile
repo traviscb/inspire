@@ -1,6 +1,5 @@
-# $Id$
-
 include ../config.mk
+-include ../config-local.mk
 
 SUBDIRS = format_elements format_templates output_formats
 
