@@ -1,6 +1,5 @@
-# $Id$
-
 include ../config.mk
+-include ../config-local.mk
 
 XSLFILES = conf2marc.xsl
 SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/conf.xml.gz

@@ -21,3 +21,4 @@ CONVERT = $(BINDIR)/bibconvert -c
 FULLSETDIR = full_spires_records/
 # where to fetch the spires records
 SPIRESDIR = ftp://ftp.slac.stanford.edu/groups/library/spires/inspire/test/
+

@@ -5,6 +5,9 @@ include config.mk
 
 SUBDIRS = bibconvert bibformat webstyle bibrank conf editor
 
+echo:
+	@echo ${TMPDIR}
+
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
 	@echo "Done.  Please run make test now."

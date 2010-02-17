@@ -1,4 +1,5 @@
 include ../config.mk
+-include ../config-local.mk
 
 SMALL_BASE = SPIRES_small_sample
 SMALL_URL = http://cdsware.cern.ch/download/invenio-demo-site-files/${SMALL_BASE}.xml.gz
@@ -8,6 +9,9 @@ XSLFILES = SPIRES2MARC.xsl
 TEST_TARGETS = test-large-with-xmllint test-large-with-xmlmarclint
 
 # main targets:
+
+echo:
+	@echo ${TMPDIR}
 
 all:
 	@echo "Done."
@@ -95,17 +99,17 @@ test-large-with-xmlmarclint: convert-large
 
 upload-small: 
 	@echo "* Uploading converted files..."
-	cp ${SMALL_BASE}.marcxml /tmp
-	chmod a+r /tmp/${SMALL_BASE}.marcxml
-	$(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
+	cp ${SMALL_BASE}.marcxml ${TMPDIR}
+	chmod a+r ${TMPDIR}/${SMALL_BASE}.marcxml
+	$(BINDIR)/bibupload -ir /${TMPDIR}/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
 # upload-small that uses sudo internally
 supload-small:
 	@echo "* Uploading converted files..."
-	cp ${SMALL_BASE}.marcxml /tmp
-	chmod a+r /tmp/${SMALL_BASE}.marcxml
-	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
+	cp ${SMALL_BASE}.marcxml /${TMPDIR}
+	chmod a+r /${TMPDIR}/${SMALL_BASE}.marcxml
+	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /${TMPDIR}/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 		
 upload-large: 
