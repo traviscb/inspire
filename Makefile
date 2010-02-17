@@ -9,9 +9,23 @@ all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
 	@echo "Done.  Please run make test now."
 
+help:
+	@echo "Available Targets:"
+	@echo "'' or 'all':        builds everything that needs building"
+	@echo "'install':          builds and does on-disk file copying"
+	@echo "'install-dbchanges':modifies the invenio DB schema for inspire"
+	@echo "'install-all':      'install' followed by 'install-dbchanges'"
+	@echo "'test':             runs pre-installation tests"
+	@echo "'test-postinstall': runs regression tests"
+	@echo
+	@echo "There are also various targets in bibconvert/ useful to loading test data."
+
 test:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make test && cd .. ;)
 	@echo "Done.  Please run make install now."
+
+test-postinstall:
+	cd tests/ && for test in *_tests.py; do python $$test; done && cd .. ;
 
 install: 
 	@echo "Installing new code and support files..."
@@ -23,6 +37,8 @@ install-dbchanges: reset-inspire-test-site-field-configuration reset-inspire-tes
 	@echo "Installing database changes..."
 	@cd kbs && make install && cd ..
 	@echo "Done."
+
+install-all: install install-dbchanges
 
 clean:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make clean && cd .. ;)
