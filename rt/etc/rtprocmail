@@ -1,0 +1,258 @@
+# promail config for RT on inspirert.cern.ch
+
+RTURL=https://inspirert.cern.ch/
+#RTURL=http://nowhere
+
+
+$HOME=/opt/rt3
+SHELL=/bin/sh
+PMDIR=$HOME/etc/procmail/
+LOGFILE=$PMDIR/pmlog
+SCRIPTDIR=$HOME/bin
+FORMAIL=/usr/bin/formail
+
+
+#LOG="
+#  "
+# Set to yes when debugging; default is no
+VERBOSE=yes
+
+# Pine uses $HOME/mail
+# Mailboxes in maildir format are often put in $HOME/Mail
+#
+# IMPORTANT: Upon reading a line that begins with MAILDIR=,
+#            Procmail does a chdir to $MAILDIR and
+#            relative paths are relative to $MAILDIR
+MAILDIR=PMDIR       # Make sure this directory exists!
+
+
+
+#filter mail daemon
+:0
+* ^FROM_DAEMON
+IN-JUNK
+
+
+
+#
+#  spires-sys mail -> RT
+#
+
+:0                                                                                
+* ^To:.*feedback@inspire.*
+*!^From:.*remedy
+*!^X-Loop: autoreply
+*!^X-RT-Loop-Prevention: INSPIRE
+*!^X-Perlmx-Spam: Gauge=XXXX
+*!^Subject: Out of Office AutoReply:
+{
+   QUEUE=FEEDBACK
+   ACTION=correspond
+   FROM=`$FORMAIL -rt -xTo:`
+    LOG="
+Debug [$$]: Delivering to rt-mailgate queue $QUEUE ($ACTION)
+"
+   # Put the ticket into RT.  The --subject is a locally-added
+   # option to echo the subject with ticket number back.
+   SUBJECT=`$RT/rt-mailgate \
+     --queue $QUEUE --action $ACTION \
+     --url $RTURL 2>&1`
+
+                                                                                
+    LOG="
+Debug [$$]: Response from RT: $SUBJECT
+"
+
+  # If the mail didn't go into RT, save it aside.
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? ^not ok
+   logs/rt-failures
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? Error
+   logs/rt-failures
+   :0
+   logs/rt-success
+         
+                                                                                                                                                       
+}
+
+
+
+
+
+
+
+
+#  inspire help mail -> RT
+#
+
+:0                                                                                
+* ^To:.*help@inspire.*
+*!^From:.*remedy
+*!^X-Loop: autoreply
+*!^X-RT-Loop-Prevention: INSPIRE
+*!^X-Perlmx-Spam: Gauge=XXXX
+*!^Subject: Out of Office AutoReply:
+{
+   QUEUE=SPIRES-HEP
+   ACTION=correspond
+   FROM=`$FORMAIL -rt -xTo:`
+    LOG="
+Debug [$$]: Delivering to rt-mailgate queue $QUEUE ($ACTION)
+"
+   # Put the ticket into RT.  The --subject is a locally-added
+   # option to echo the subject with ticket number back.
+   SUBJECT=`$RT/rt-mailgate \
+     --queue $QUEUE --action $ACTION \
+     --url $RTURL 2>&1`
+
+                                                                                
+    LOG="
+Debug [$$]: Response from RT: $SUBJECT
+"
+  # If the mail didn't go into RT, save it aside.
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? ^not ok
+   logs/rt-failures
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? Error
+   logs/rt-failures
+   :0
+   /dev/null
+         
+                                                                                                                                                       
+}
+
+                           
+
+                                                                                
+#
+#  admin  mail -> RT->SPIRES-HEP
+#
+
+:0                                                                                
+* ^To:.*admin@inspire.*
+*!^From:.*remedy
+*!^X-Loop: autoreply
+*!^X-RT-Loop-Prevention: INSPIRE
+*!^X-Perlmx-Spam: Gauge=XXXX
+*!^Subject: Out of Office AutoReply:
+{
+   QUEUE=SPIRES-HEP
+   ACTION=comment
+   FROM=`$FORMAIL -rt -xTo:`
+    LOG="
+Debug [$$]: Delivering to rt-mailgate queue $QUEUE ($ACTION)
+"
+   # Put the ticket into RT.  The --subject is a locally-added
+   # option to echo the subject with ticket number back.
+   SUBJECT=`$RT/rt-mailgate \
+     --queue $QUEUE --action $ACTION \
+     --url $RTURL 2>&1`
+                                                                                
+    LOG="
+Debug [$$]: Response from RT: $SUBJECT
+"
+
+
+  # If the mail didn't go into RT, save it aside.
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? ^not ok
+   logs/rt-failures
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? Error
+   logs/rt-failures
+   :0
+   /dev/null
+         
+                                                                                                                                                       
+}
+
+
+
+
+#
+#  additions
+#
+
+:0                                                                                
+* ^To:.*additions@inspire*
+*!^From:.*remedy
+*!^X-Loop: autoreply
+*!^X-RT-Loop-Prevention: SLAC-TIS
+*!^X-Perlmx-Spam: Gauge=XXXX
+*!^Subject: Out of Office AutoReply:
+{
+   QUEUE=HEP-ADDITIONS
+   ACTION=correspond
+   FROM=`$FORMAIL -rt -xTo:`
+    LOG="
+Debug [$$]: Delivering to rt-mailgate queue $QUEUE ($ACTION)
+"
+   # Put the ticket into RT.  The --subject is a locally-added
+   # option to echo the subject with ticket number back.
+   SUBJECT=`$RT/rt-mailgate \
+     --queue $QUEUE --action $ACTION \
+     --url $RTURL 2>&1`
+
+                                                                                
+    LOG="
+Debug [$$]: Response from RT: $SUBJECT
+"
+  # If the mail didn't go into RT, save it aside.
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? ^not ok
+   logs/rt-failures
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? Error
+   logs/rt-failures
+   :0
+   /dev/null
+         
+                                                                                                                                                       
+}
+
+
+                                                                                
+#
+#  spires mail -> RT->SPIRES-HEP
+#   catch anything not caught above
+
+:0                                                                                
+*!^From:.*remedy
+*!^X-Loop: autoreply
+*!^X-RT-Loop-Prevention: INSPIRE
+*!^X-Perlmx-Spam: Gauge=XXXX
+*!^Subject: Out of Office AutoReply:
+{
+   QUEUE=INSPIRE
+   ACTION=correspond
+   FROM=`$FORMAIL -rt -xTo:`
+    LOG="
+Debug [$$]: Delivering to rt-mailgate queue $QUEUE ($ACTION)
+"
+   # Put the ticket into RT.  The --subject is a locally-added
+   # option to echo the subject with ticket number back.
+   SUBJECT=`$RT/rt-mailgate \
+     --queue $QUEUE --action $ACTION \
+     --url $RTURL 2>&1`
+                                                                                
+    LOG="
+Debug [$$]: Response from RT: $SUBJECT
+"
+
+
+  # If the mail didn't go into RT, save it aside.
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? ^not ok
+   logs/rt-failures
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? Error
+   logs/rt-failures
+   :0
+   /dev/null
+         
+                                                                                                                                                       
+}
+
+
