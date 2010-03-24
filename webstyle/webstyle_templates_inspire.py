@@ -311,6 +311,7 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
  </div>
 <!-- replaced page footer -->
 </div>
+%(tracker)s
 </body>
 </html>
         """ % {
@@ -334,6 +335,7 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
 
           'pagefooteradd' : pagefooteradd,
 
+          'tracker' : self.ga_tracker(),
           }
         return out
 
@@ -350,3 +352,24 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
             return version
 
 
+#    CFG_ANALYTICS_CODE = "UA-15410236-1"   -< inspirebeta.net
+    CFG_ANALYTICS_CODE = "UA-15410236-2" 
+    CFG_ANALYTICS_URL = "google-analytics.com/ga.js"
+    def ga_tracker(self,ga_code = CFG_ANALYTICS_CODE, ga_url = CFG_ANALYTICS_URL):
+        """produces the snippet for google analytics tracking.
+        parameters:
+        ga_code the code for the analytics account used
+        ga_url the target url for analytics (usually
+        google-analytics.com/ga.js)
+        """
+        snippet = ''
+        if ga_code and ga_url:
+            snippet = '<script type="text/javascript"> var gaJsHost ='+\
+    '(("https:" == document.location.protocol) ? "https://ssl." :'+\
+    '"http://www."); document.write(unescape("%3Cscript src=\'" + gaJsHost '+\
+    '+ "' + ga_url + '\' type=\'text/javascript\'%3E%3C/script%3E"));'+\
+    '</script> <script type="text/javascript">  try { var pageTracker = '+\
+    '_gat._getTracker("' + ga_code + '");    pageTracker._trackPageview(); } catch(err) {}</script>'
+
+
+        return(snippet)
