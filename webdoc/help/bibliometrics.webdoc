@@ -1,0 +1,189 @@
+<!-- WebDoc-Page-Title: _(Bibliometrics)_ -->
+<!-- WebDoc-Page-Navtrail: <a class="navtrail" href="<CFG_SITE_URL>/help/<lang:link/>">_(Help Central)_</a> -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+<h4>
+ <lang>
+  <en>
+   Bibliometrics
+  </en>
+ </lang>
+</h4>
+
+    <ul>
+     <li>
+      <a href="#citesummary">
+       <lang>
+        <en>Citesummary Statistics</en>
+       </lang>
+      </a>
+     </li>
+     <li>
+      <a href="#warning">
+       <lang>
+        <en>A Warning About Bibliometrics</en>
+       </lang>
+      </a>
+     </li>
+    </ul>
+
+<h5>
+ <a name="citesummary">
+  <lang>
+   <en>Citesummary Statistics</en>
+  </lang>
+ </a>
+</h5>
+
+    <p>
+     <lang>
+      <en>
+       These are descriptions of (and information about) the citation metrics 
+       available on INSPIRE.  If you have questions or comments about them, or 
+       would like to suggest new measures, please <a 
+       href="mailto:feedback@inspire-hep.net">let us know</a>.
+      </en>
+     </lang>
+    </p>
+
+    <p>
+     <lang>
+      <en>
+       Of course any discussion of citations needs to include the <a
+       href="#warning">fine print</a>.  Note that all stats are provided for published 
+       papers and all papers.  This refers to the status of the paper, not the papers 
+       citing the paper, and uses the definition of published explained in the <a
+       href="#warning">fine print</a>.
+      </en>
+     </lang>
+    </p>
+
+    <p>
+     <lang>
+      <en>
+       We currently display the following citation statistics for any group of papers</p>
+      </en>
+     </lang>
+    </p>
+
+    <dl>
+     <dt>
+      <lang>
+       <en>
+        Total number of citable papers analyzed
+       </en>
+      </lang>
+     </dt>
+     <dd>
+      <lang>
+       <en>
+        This is simply the number of papers from your search that were counted in
+        the HTML citesummary.  This is the number used for averages, etc.  Other papers
+        may have been found, but may not have been eligible for citation tracking
+        (again, see the <a href="#warning">fine print</a>).
+       </en>
+      </lang>
+     </dd>
+
+    <dl>
+     <dt>
+      <lang>
+       <en>
+        Total number of citations
+       </en>
+      </lang>
+     </dt>
+     <dd>
+      <lang>
+       <en>
+        Simply the total number of citations to to the papers in your search.
+       </en>
+      </lang>
+     </dd>
+
+    <dl>
+     <dt>
+      <lang>
+       <en>
+        Average citations per paper 
+       </en>
+      </lang>
+     </dt>
+     <dd>
+      <lang>
+       <en>
+        The above two numbers as a ratio.
+       </en>
+      </lang>
+     </dd>
+
+    <dl>
+     <dt>
+       <a name="citesummary_h-index">
+        <lang>
+         <en>h-index</en>
+        </lang>
+       </a>
+     </dt>
+     <dd>
+      <lang>
+       <en>
+        The h-index (or simply, 'h') is defined as the number of papers with citation 
+        number higher or equal to h.  It is intended as a useful index to characterize the 
+        scientific output of a researcher.  First proposed by Hirsch in <a
+        href="http://inspire-hep.net/record/690567">physics/0508025</a>, it is
+        explained better there than here.  See also:
+        <a href="http://inspire-hep.net/search?ln=en&p=h-index&f=&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb">
+        Search INSPIRE for h-index</a>.
+       </en>
+      </lang>
+     </dd>
+
+<!--
+
+    more definitions at http://www.slac.stanford.edu/spires/play/citemetrics/
+
+-->
+
+<h5>
+ <a name="warning">
+  <lang>
+   <en>
+    A Warning About Bibliometrics
+   </en>
+  </lang>
+ </a>
+</h5>
+
+    <!-- more general comments here, about how bibliometrics should always be taken
+         with a grain of salt, potential skew, etc. etc. -->
+
+    <p>
+     <lang>
+      <en>
+       The citation search should be used and interpreted with great care. Citations 
+       are gathered only from the papers in our database that have references 
+       entered electronically via eprints or journal articles. Non-eprinted papers are 
+       difficult for us due to manpower constraints. The citations we do collect are 
+       subject to many forms of error, from typographical errors in the source paper, to 
+       errors in our parsing of the reference, to errors due to some nonstandard 
+       reference formats. Publications such as monographs or conference proceedings 
+       are treated inconsistently, both in the literature and in our database. Thus 
+       citations to these works can be up to date, completely missing, or somewhere 
+       in between. 
+      </en>
+     </lang>
+    </p>
+
+    <p>
+     <lang>
+      <en>
+       These are just a few of the challenges that any attempt to track bibliometrics confronts. 
+       No database is perfect, and our best defense against imperfection remains you, the 
+       user.  <!-- insert here suggestions about how to help: latex cites, contacting with 
+       errors, etc.  Cf. http://www.slac.stanford.edu/spires/hep/help/cite_warning.shtml and
+       also http://www.slac.stanford.edu/spires/hep/refs/helpus.shtml -->
+      </en>
+     </lang>
+    </p>
+
