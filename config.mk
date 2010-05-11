@@ -10,6 +10,7 @@ ETCDIR = $(PREFIX)/etc
 TMPDIR = $(PREFIX)/tmp
 LIBDIR = $(PREFIX)/lib
 WEBDIR = $(PREFIX)/var/www
+DOCDIR = $(LIBDIR)/webdoc/invenio
 
 INSTALL = install -g apache -m 775
 
