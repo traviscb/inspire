@@ -58,12 +58,12 @@ def generate_topcite_list(dict, citeds, citedcut='0',citings="", of="", num="",
 
     pdgnote=""
     if allpdg:
-        from invenio.bibformat_engine import BibFormatObject
+        from invenio.search_engine import get_fieldvalues
         # we have to count pdg separately to unify
         pdg = intbitset(perform_request_search(p="210:'RPP' -210:'section'"))
         pdg_counts = sum([len( intbitset(dict[p]) & citing_set ) for p in pdg])
         cited_set = cited_set - pdg
-        pdg_recent = sorted([(a,BibFormatObject(a).field("773__y")) for a in pdg.tolist()],key=lambda p:int(p[1])).pop()[0]
+        pdg_recent = sorted([ (a, get_fieldvalues(a,'773__y')[0]) for a in pdg.tolist()],key=lambda p:int(p[1])).pop()[0]
         pdgnote = "<br />The PDG has been unified and the most recent is shown"
 
 
