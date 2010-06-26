@@ -189,7 +189,9 @@ th.searchboxheader a:hover {
    color: #000;
 }
 
-
+dt {
+    text-decoration: underline;
+}
 
 .navbar{
    color:#FFF;
