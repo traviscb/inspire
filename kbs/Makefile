@@ -3,6 +3,7 @@ include ../config.mk
 
 WEBDESC='Mapping of SPIRES abbreviations for URLs to Displayable names'
 OADESC='Journals that are fully OA'
+JDESC='Journal abbreviations commonly used.  Standard for for titles'
 PWD=`pwd`
 
 all:
@@ -16,9 +17,11 @@ install-dbchanges:
 	make delete-weblinks
 	make delete-oalinks
 	make delete-talktype
+	make delete-journal
 	make load-weblinks-knowledge-base
 	make load-weblinks-knowledge-base
 	make load-talktype-knowledge-base
+	make load-journal-knowledge-base
 	@echo "Done."
 
 delete-weblinks:
@@ -29,6 +32,9 @@ delete-oalinks:
 
 delete-talktype:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='TALKTYPE')" | $(BINDIR)/dbexec
+
+delete-journal:
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='JOURNAL')" | $(BINDIR)/dbexec
 
 load-weblinks-knowledge-base:
 	echo "INSERT into knwKB (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
@@ -52,6 +58,14 @@ load-talktype-knowledge-base:
 LOAD DATA LOCAL INFILE '$(PWD)/talktype.kba' replace INTO TABLE templinks;\
 update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
 insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
+"|$(BINDIR)/dbexec
+
+load-journal-knowledge-base:
+	echo "INSERT into knwKB (name, description) VALUES('JOURNAL',$(JDESC)) on duplicate key update description = $(JDESC)" | $(BINDIR)/dbexec
+	echo " create temporary table templinks like knwKBRVAL;\
+LOAD DATA LOCAL INFILE '$(PWD)/journal.kb' replace INTO TABLE templinks;\
+update templinks set id_knwKB= (select id from knwKB where name='JOURNAL');\
+insert into  knwKBRVAL  (m_key,m_value, id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
 
