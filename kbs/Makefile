@@ -16,9 +16,11 @@ install-dbchanges:
 	make delete-weblinks
 	make delete-oalinks
 	make delete-talktype
+	make delete-synomyms
 	make load-weblinks-knowledge-base
 	make load-weblinks-knowledge-base
 	make load-talktype-knowledge-base
+	make load-synonyms-knowledge-base
 	@echo "Done."
 
 delete-weblinks:
@@ -29,6 +31,10 @@ delete-oalinks:
 
 delete-talktype:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='TALKTYPE')" | $(BINDIR)/dbexec
+
+delete-synomyms:
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='SYNONYMS')" | $(BINDIR)/dbexec
+
 
 load-weblinks-knowledge-base:
 	echo "INSERT into knwKB (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
@@ -54,6 +60,13 @@ update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
 insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
+load-journal-knowledge-base:
+	echo "INSERT into knwKB (name, description) VALUES('SYNONYMS',$(JDESC)) on duplicate key update description = $(JDESC)" | $(BINDIR)/dbexec
+	echo " create temporary table templinks like knwKBRVAL;\
+LOAD DATA LOCAL INFILE '$(PWD)/synonyms.kb' replace INTO TABLE templinks;\
+update templinks set id_knwKB= (select id from knwKB where name='SYNONYMS');\
+insert into  knwKBRVAL  (m_key,m_value, id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
+"|$(BINDIR)/dbexec
 
 clean:
 	@rm -f *.orig *~
