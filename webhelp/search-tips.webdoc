@@ -204,7 +204,7 @@ Using quotes can help when using truncation.
 <td class="tips-lhs">
 <p>You can now search on citation count directly</p>
     <form action="/search" method="get">
-    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200+" size="40" />
+    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200->20000" size="40" />
     <select name="f"><option value="">any field</option>
                      <option>title</option>
                      <option>author</option>
