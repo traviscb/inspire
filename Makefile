@@ -26,7 +26,8 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-useraccess-configuration \
                  reset-inspire-submission-configuration \
                  reset-inspire-portalbox-configuration \
-                 reset-inspire-format-configuration
+                 reset-inspire-format-configuration \
+		 reset-inspire-examples-searches 
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
@@ -222,7 +223,12 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (24, 8, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (24, 11, 90)" | $(BINDIR)/dbexec
 	### inst field_tags
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 65, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 65, 190)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25,	67, 180)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 68, 170)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 69, 160)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 70, 150)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 71, 140)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (26, 66, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (27, 67, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (28, 68, 90)" | $(BINDIR)/dbexec
@@ -272,12 +278,10 @@ reset-inspire-index-configuration:
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (17, 'postalcode', 'postal code', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (18, 'institution', 'institution', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 25)" | $(BINDIR)/dbexec
-	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 26)" | $(BINDIR)/dbexec
-	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 27)" | $(BINDIR)/dbexec
-	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 28)" | $(BINDIR)/dbexec
-	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 29)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (17, 26)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (18, 30)" | $(BINDIR)/dbexec
+# add address to global index
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 25)" | $(BINDIR)/dbexec
 	echo "CREATE TABLE IF NOT EXISTS idxPAIR17F (\
   id mediumint(9) unsigned NOT NULL auto_increment,\
   term varchar(100) default NULL,\
@@ -542,3 +546,13 @@ reset-inspire-format-configuration:
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 1, 130)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 2, 120)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-inst-format-configuration."
+
+reset-inspire-examples-searches:
+	@echo ">>> Resetting example searches:"
+	echo "TRUNCATE collection_example" | $(BINDIR)/dbexec
+	echo "TRUNCATE example" | $(BINDIR)/dbexec
+	cat webhelp/search_examples.dat |  $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example)	select 1, example.id from example where example.type='HEP';" | $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example)	select 2, example.id from example where example.type='Institutions';" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-example-searches."
+
