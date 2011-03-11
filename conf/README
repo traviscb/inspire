@@ -45,6 +45,7 @@ And in it you will put:
 INVENIO_DB="cdsinvenio"
 INVENIO_DB_USER="cdsinvenio"
 INVENIO_DB_PASS="<your db password for invenio user>"
+## *NOTE* must escape things like $ here"
 MYSQL_ROOT_PASS="<your db root pw, maybe blank>"
 INSPIRE_REPO="<your inspire repo>"
 INVENIO_REPO="<your invenio repo>"
