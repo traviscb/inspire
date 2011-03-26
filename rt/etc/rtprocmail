@@ -39,6 +39,45 @@ IN-JUNK
 #
 
 :0                                                                                
+* ^To:.*authors@inspire.*
+*!^From:.*remedy
+*!^X-Loop: autoreply
+*!^X-RT-Loop-Prevention: INSPIRE
+*!^X-Perlmx-Spam: Gauge=XXXX
+*!^Subject: Out of Office AutoReply:
+{
+   QUEUE=AUTHORS
+   ACTION=correspond
+   FROM=`$FORMAIL -rt -xTo:`
+    LOG="
+Debug [$$]: Delivering to rt-mailgate queue $QUEUE ($ACTION)
+"
+   # Put the ticket into RT.  The --subject is a locally-added
+   # option to echo the subject with ticket number back.
+   SUBJECT=`$RT/rt-mailgate \
+     --queue $QUEUE --action $ACTION \
+     --url $RTURL 2>&1`
+
+                                                                                
+    LOG="
+Debug [$$]: Response from RT: $SUBJECT
+"
+
+  # If the mail didn't go into RT, save it aside.
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? ^not ok
+   logs/rt-failures
+   :0:$MAILDIR/lock/.lockmail
+   * SUBJECT ?? Error
+   logs/rt-failures
+   :0
+   logs/rt-success
+         
+                                                                                                                                                       
+}
+
+
+:0                                                                                
 * ^To:.*feedback@inspire.*
 *!^From:.*remedy
 *!^X-Loop: autoreply
