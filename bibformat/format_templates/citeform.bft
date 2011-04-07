@@ -1,0 +1,26 @@
+<name>citeform</name>
+<description>user form for updating cites</description>
+<head>      
+<script type="text/javascript">      
+function insRow(z){      
+    var x=document.getElementById(z).insertRow(1)      
+    var y=x.insertCell(0)
+    var u=x.insertCell(1)      
+    u.innerHTML='<input type="text" name="citation" size="35">'      
+}      
+</script>      
+</head>      
+<form method="post" action="mailto:sul@slac.stanford.edu">
+<table>
+<BFE_REPORT_NUMBER prefix="" suffix="" separator=" " nbMax="" default="" escape="" /> , <BFE_JOURNAL prefix="" suffix="" separator=" " nbMax="" default="" escape="" /><br>
+<BFE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/><br><BFE_AUTHORS prefix="" suffix="" default="" escape="" affiliation_suffix=")" extension="[...]" limit="3" print_links="yes" separator=" ; " print_affiliations="no" highlight="no" interactive="no" affiliation_prefix=" ("/>
+
+</table><br>
+<table id="t0"><tr><td><input id="t0" type="button" onclick="insRow(this.id)" value = "V"></td>
+<input type="hidden" name="irn" value= "  <BFE_SPIRES_IRN /> ">
+<td><input type="text" name="cite" size="35" value=" "></td><td align="left" width="240"></tr></table>
+
+<BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
+<input type="submit" name="submit" value="Send" /> 
+
+</form>
