@@ -66,7 +66,7 @@ from invenio.urlutils import make_canonical_urlargd, drop_default_urlargd, creat
 #from invenio.webinterface_handler import wash_urlargd
 #from invenio.bibrank_citation_searcher import get_cited_by_count
 #from invenio.intbitset import intbitset
-#from invenio.websearch_external_collections import external_collection_get_state, get_external_collection_engine
+#from invenio.websearch_externacollections import external_collection_get_state, get_external_collection_engine
 #from invenio.websearch_external_collections_utils import get_collection_id
 #from invenio.websearch_external_collections_config import CFG_EXTERNAL_COLLECTION_MAXRESULTS
 
@@ -317,9 +317,66 @@ class Template(DefaultTemplate):
         header = _("Search %s records for") % \
                  self.tmpl_nbrecs_info(record_count, "", "")
         header += ':'
-        ssearchurl = self.build_search_interface_url(c=collection_id, aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
+        ssearchurl = self.build_search_interface_url(c=collection_id, 
+                                    aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
 
         out += '''
+
+        <script type="text/javascript">
+            function perform_easy_search() {
+                // get values
+                author = document.getElementById('author').value;
+                title = document.getElementById('title').value;
+                c = document.getElementById('c').value;
+                rn = document.getElementById('rn').value;
+                aff = document.getElementById('aff').value;
+                cn = document.getElementById('cn').value;
+                k = document.getElementById('k').value;
+                eprinttype = document.getElementById('eprinttype');
+                eprinttype = eprinttype.options[eprinttype.selectedIndex].value;
+                eprintnumber = document.getElementById('eprintnumber').value;
+                topcite = document.getElementById('topcite');
+                topcite = topcite.options[topcite.selectedIndex].value;
+                j = document.getElementById('j');
+                j = j.options[j.selectedIndex].value;
+                jvol = document.getElementById('jvol').value;
+                jpage = document.getElementById('jpage').value;
+
+                // filter and build
+                query = 'find';
+                if (author != '') { query += ' and a ' + author; }
+                if (title != '') { query += ' and t ' + title; }
+                if (c != '') { query += ' and c ' + c; }
+                if (rn != '') { query += ' and rn ' + rn; }
+                if (aff != '') { query += ' and aff ' + aff; }
+                if (cn != '') { query += ' and cn ' + cn; }
+                if (k != '') { query += ' and k ' + k; }
+                if (eprinttype != '' && eprintnumber != '') {
+                    query += ' and eprint ' + eprinttype + ' ' + eprintnumber;
+                }
+                else {
+                    if (eprinttype != '') {
+                        query += ' and eprint ' + eprinttype;
+                    }
+                    if (eprintnumber != '') {
+                        query += ' and eprint ' + eprintnumber;
+                    }
+                }
+                if (topcite != '') { query += ' and topcite ' + topcite; }
+                if (j != '' and jvol != '' and jpage != '') { query += ' and j ' + j + ','+ jvol + ',' + jpage; }
+                else {
+                    if (j != '') { query += ' and j ' + j; }
+                    if (jvol != '') { query += ' and jvol ' + jvol; }
+                    if (jpage != '') { query += ' and jp ' + jpage; }
+                }
+
+                query = query.replace(' and ', ' ');
+                query = query.replace(/ /g, '+');
+                search_url = '%(search_url)s'.replace('QUERY', query);
+                window.location = search_url;
+            };
+        </script>
+
         <table class="searchbox advancedsearch">
          <thead>
           <tr>
@@ -334,42 +391,42 @@ class Template(DefaultTemplate):
 
           <tr>
             <th align="right">Author:</th>
-            <td align="left"><input size="40" name="author"/></td>
+            <td align="left"><input size="40" id="author"/></td>
           </tr>
          
           <tr>
             <th align="right">Title:</th>
-            <td align="left"><input size="40" name="title" /></td>
+            <td align="left"><input size="40" id="title" /></td>
           </tr>
 
           <tr>
             <th align="right">Citation:</th>
-            <td align="left"><input size="40" name="c" /></td>
+            <td align="left"><input size="40" id="c" /></td>
           </tr>
 
           <tr>
             <th align="right">Report Number:</th>
-            <td align="left"><input size="40" name="reportnumber" /></td>
+            <td align="left"><input size="40" id="rn" /></td>
           </tr>
 
           <tr>
             <th align="right">Affiliation:</th>
-            <td align="left"><input size="40" name="aff" /></td>
+            <td align="left"><input size="40" id="aff" /></td>
           </tr>
 
           <tr>
             <th align="right">Collaboration:</th>
-            <td align="left"><input size="40" name="cn" /></td>
+            <td align="left"><input size="40" id="cn" /></td>
           </tr>
 
           <tr>
             <th align="right">Keywords:</th>
-            <td align="left"><input size="40" name="k" /></td>
+            <td align="left"><input size="40" id="k" /></td>
           </tr>
           
           <tr>
             <th align="right">Eprint:</th>
-            <td align="left"><select name="eprint">
+            <td align="left"><select id="eprinttype">
             <option value="" selected="selected">Any Type</option>
             <option>ACC-PHYS</option>
             <option>ASTRO-PH</option>
@@ -386,14 +443,14 @@ class Template(DefaultTemplate):
             <option>PHYSICS</option>
             <option>QUANT-PH</option>
             </select>&nbsp;&nbsp; Number
-	        <input size="14" name="eprint" />
+	        <input size="14" id="eprintnumber" />
 	        </td>
         </tr>
 
         <tr>
           <th align="right">Topcite:</th>
           <td align="left">
-	      <select name="cited">
+	      <select id="topcite">
             <option value="" selected="selected">Don\'t care</option>
             <option>50->99</option>
             <option>100->249</option>
@@ -410,7 +467,7 @@ class Template(DefaultTemplate):
         
         <tr>
           <th align="right">Journal:</th>
-          <td align="left"><select name="J">
+          <td align="left"><select id="j">
             <option value="" selected="selected">Any Journal</option>
             <option>Acta Phys.Austr.</option>
 
@@ -495,14 +552,15 @@ class Template(DefaultTemplate):
             <option>Yad. Fiz.</option>
             <option>Z. Phys.</option>
             <option>Zh. Eksp. Teor. Fiz.</option>
-            </select>&nbsp;&nbsp; vol:
-	      <input size="8" name="j" />  pg: <input size="8" name="j" /></td>
+            </select>&nbsp;&nbsp; 
+            vol:<input size="8" id="jvol" />
+            pg: <input size="8" id="jpage" /></td>
         </tr>
 
         <tr>
-          <td class="searchboxbody" style="white-space: nowrap;">
-              <input class="formbutton" type="submit" name="action_search" value="%(msg_search)s" />
-              <input class="formbutton" type="submit" name="action_browse" value="%(msg_browse)s" /></td>
+          <td class="searchboxbody" style="white-space: nowrap;" align="center">
+              <input type="button" onclick="perform_easy_search()" name="action_search" value="%(msg_search)s" />
+          </td>
         </tr>
         
         <tr valign="bottom">
@@ -516,12 +574,14 @@ class Template(DefaultTemplate):
         
         </tbody>
         </table>
+
         <!-- @todo - more imports -->
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_ADVANCEDSEARCH_PATTERN_BOX_WIDTH,
                'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
                'siteurl' : CFG_SITE_URL,
                'ssearch' : create_html_link(ssearchurl, {}, _("Simple Search")),
+               'search_url' : (CFG_SITE_URL + '/search?p=QUERY&action_search=Search'),
                'header' : header,
 
                'matchbox_m1' : self.tmpl_matchtype_box('m1', ln=ln),
@@ -536,7 +596,6 @@ class Template(DefaultTemplate):
                'middle_option_3' : middle_option_3,
 
                'msg_search' : _("Search"),
-               'msg_browse' : _("Browse"),
                'msg_search_tips' : _("Search Tips")}
 
         if (searchoptions):
@@ -600,7 +659,6 @@ class Template(DefaultTemplate):
                   </table>
                   <!--/create_searchfor_advanced()-->
               """ % {
-
                     'added' : _("Added/modified since:"),
                     'until' : _("until:"),
                     'added_or_modified': self.tmpl_inputdatetype(ln=ln),
@@ -616,5 +674,3 @@ class Template(DefaultTemplate):
                     'formatoptions' : formatoptions
                   }
         return out
-
-
