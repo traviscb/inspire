@@ -53,7 +53,7 @@ insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
 create-institutions-dynamic-kb:
-	/usr/bin/env python InstitutionsCollection_dynamic_KB.py
+	$(PYTHON) InstitutionsCollection_dynamic_KB.py
 
 clean:
 	@rm -f *.orig *~
