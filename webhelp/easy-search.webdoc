@@ -1,0 +1,279 @@
+## -*- mode: html; coding: utf-8; -*-
+
+## This file is part of Invenio.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+##
+## Invenio is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## Invenio is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with Invenio; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+<!-- WebDoc-Page-Title: _(Easy Search)_ -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+<p>
+<lang>
+  <en>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</en>
+  <fr>Bienvenue au _(Easy Search)_ de <CFG_SITE_NAME_INTL>.</fr>
+  <de>Herzlich Willkommen in der _(Easy Search)_ von <CFG_SITE_NAME_INTL>.</de>
+  <es>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</es>
+  <ca>Benvinguts al _(Easy Search)_ de <CFG_SITE_NAME_INTL>.</ca>
+  <pl>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</pl>
+  <pt>Bem vindo à _(Easy Search)_ do <CFG_SITE_NAME_INTL>.</pt>
+  <it>Benvenuti nell'_(Easy Search)_ di <CFG_SITE_NAME_INTL>.</it>
+  <ru>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</ru>
+  <sk>Víta Vás _(Easy Search)_ <CFG_SITE_NAME_INTL>.</sk>
+  <cs>Vítá Vás _(Easy Search)_ <CFG_SITE_NAME_INTL>.</cs>
+  <no>Velkommen til _(Easy Search)_ for <CFG_SITE_NAME_INTL>.</no>
+  <sv>Välkommen till _(Easy Search)_en för <CFG_SITE_NAME_INTL>.</sv>
+  <el>Καλωσήλθατε στην _(Easy Search)_ για το <CFG_SITE_NAME_INTL>.</el>
+  <uk>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</uk>
+  <ja>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</ja>
+  <bg>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</bg>
+  <hr>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</hr>
+  <zh_CN>Welcome to _(Easy Search)_ of the <CFG_SITE_NAME_INTL>.</zh_CN>
+  <zh_TW>Welcome to _(Easy Search)_ of <CFG_SITE_NAME_INTL>.</zh_TW>
+  <hu>Üdvözöljük a <CFG_SITE_NAME_INTL> _(Easy Search)_ szolgáltatásában.</hu>
+</lang>
+</p>
+<blockquote>
+<dl>
+
+<script type="text/javascript">
+    function perform_easy_search() {
+        // get values
+        author = document.getElementById('author').value;
+        title = document.getElementById('title').value;
+        rn = document.getElementById('rn').value;
+        aff = document.getElementById('aff').value;
+        cn = document.getElementById('cn').value;
+        k = document.getElementById('k').value;
+        eprinttype = document.getElementById('eprinttype');
+        eprinttype = eprinttype.options[eprinttype.selectedIndex].value;
+        eprintnumber = document.getElementById('eprintnumber').value;
+        topcite = document.getElementById('topcite');
+        topcite = topcite.options[topcite.selectedIndex].value;
+        j = document.getElementById('j');
+        j = j.options[j.selectedIndex].value;
+        jvol = document.getElementById('jvol').value;
+        jpage = document.getElementById('jpage').value;
+
+        // filter and build
+        query = 'find';
+        if (author != '') { query += ' and a ' + author; }
+        if (title != '') { query += ' and t ' + title; }
+        if (rn != '') { query += ' and rn ' + rn; }
+        if (aff != '') { query += ' and aff ' + aff; }
+        if (cn != '') { query += ' and cn ' + cn; }
+        if (k != '') { query += ' and k ' + k; }
+        if (eprinttype != '' && eprintnumber != '') {
+            query += ' and eprint ' + eprinttype + ' ' + eprintnumber;
+        }
+        else {
+            if (eprinttype != '') {
+                query += ' and eprint ' + eprinttype;
+            }
+            if (eprintnumber != '') {
+                query += ' and eprint ' + eprintnumber;
+            }
+        }
+        if (topcite != '') { query += ' and topcite ' + topcite; }
+        if (j != '' && jvol != '' && jpage != '') { query += ' and j ' + j + ','+ jvol + ',' + jpage; }
+        else {
+            if (j != '') { query += ' and j ' + j; }
+            if (jvol != '') { query += ' and jvol ' + jvol; }
+            if (jpage != '') { query += ' and jp ' + jpage; }
+        }
+
+        query = query.replace(/topcite (\d+)?\+/, 'topcite $1->99999');
+        query = query.replace(' and ', ' ');
+        query = query.replace(/ /g, '+');
+        search_url = '<CFG_SITE_URL>/search?p=' + query;
+        window.location = search_url;
+    };
+</script>
+
+<tbody>
+<table border="0">
+<tr valign="bottom">
+<td class="searchboxbody" style="white-space: nowrap;">
+
+<tr>
+<th align="right">Author:</th>
+<td align="left"><input size="52" name="search" id="author"/></td>
+</tr>
+
+<tr>
+<th align="right">Title:</th>
+<td align="left"><input size="52" id="title" /></td>
+</tr>
+
+<tr>
+<th align="right">Report Number:</th>
+<td align="left"><input size="52" id="rn" /></td>
+</tr>
+
+<tr>
+<th align="right">Affiliation:</th>
+<td align="left"><input size="52" id="aff" /></td>
+</tr>
+
+<tr>
+<th align="right">Collaboration:</th>
+<td align="left"><input size="52" id="cn" /></td>
+</tr>
+
+<tr>
+<th align="right">Keywords:</th>
+<td align="left"><input size="52" id="k" /></td>
+</tr>
+
+<tr>
+<th align="right">Eprint:</th>
+<td align="left"><select id="eprinttype">
+    <option value="" selected="selected">Any Type</option>
+    <option>ACC-PHYS</option>
+    <option>ASTRO-PH</option>
+    <option>GR-QC</option>
+
+    <option>HEP-EX</option>
+    <option>HEP-LAT</option>
+    <option>HEP-PH</option>
+    <option>HEP-TH</option>
+
+    <option>NUCL-EX</option>
+    <option>NUCL-TH</option>
+
+    <option>PHYSICS</option>
+    <option>QUANT-PH</option>
+    </select>&nbsp;&nbsp; Number
+    <input size="14" id="eprintnumber" />
+</td>
+</tr>
+
+<tr>
+<th align="right">Topcite:</th>
+<td align="left">
+<select id="topcite">
+    <option value="" selected="selected">Don't care</option>
+    <option>50+</option>
+    <option>100+</option>
+    <option>250+</option>
+    <option>500+</option>
+    <option>1000+</option>
+    <option>50->99</option>
+    <option>100->249</option>
+    <option>250->499</option>
+    <option>500->999</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<th align="right">Journal:</th>
+<td align="left"><select id="j">
+    <option value="" selected="selected">Any Journal</option>
+    <option>Acta Phys.Austr.</option>
+
+    <option>Acta Phys.Polon.</option>
+    <option>Ann.Poincare</option>
+    <option>Ann.Phys.(N.Y.)</option>
+    <option>Astropart.Phys.</option>
+    <option>Astrophys.J.</option>
+    <option>Can.J.Phys.</option>
+
+    <option>Class.Quant.Grav.</option>
+    <option>Comm.Nucl.Part.Phys.</option>
+    <option>Commun.Math.Phys.</option>
+    <option>Commun. Theor. Phys.</option>
+    <option>Comput. Phys. Commun.</option>
+    <option>Czech. J. Phys.</option>
+
+    <option>Europhys. Lett.</option>
+    <option>Eur. Phys. J.</option>
+    <option>Few Body Syst.</option>
+    <option>Fiz. Elem. Chast. At. Yadra</option>
+    <option>Fizika</option>
+    <option>Fortschr. Phys.</option>
+
+    <option>Found. Phys.</option>
+    <option>Gen. Rel. Grav.</option>
+    <option>Hadronic J.</option>
+    <option>Helv. Phys. Acta</option>
+    <option>High Energy Phys. Nucl. Phys.</option>
+    <option>Ieee Trans. Magnetics</option>
+
+    <option>Ieee Trans. Nucl. Sci.</option>
+    <option>Instrum. Exp. Tech.</option>
+    <option>Int. J. Mod. Phys.</option>
+    <option>Int. J. Theor. Phys.</option>
+    <option>Jcap</option>
+    <option>Jhep</option>
+
+    <option>J. Math. Phys.</option>
+    <option>J. Phys. - A -</option>
+    <option>J. Phys. - G -</option>
+    <option>J. Phys. Soc. Jap.</option>
+    <option>Jetp Lett.</option>
+    <option>Lett. Math. Phys.</option>
+
+    <option>Lett. Nuovo Cim.</option>
+    <option>Living Rev. Rel.</option>
+    <option>Mod. Phys. Lett.</option>
+    <option>Mon.Not.Roy.Astron.Soc.</option>
+    <option>New J.Phys.</option>
+    <option>Nucl.Instrum.Meth.</option>
+    <option>Nucl.Phys.</option>
+
+    <option>Nucl.Phys.(Proc.Suppl.)</option>
+    <option>Nuovo Cim.</option>
+    <option>Part. Accel.</option>
+    <option>Phys. Atom. Nucl.</option>
+    <option>Phys.Lett.</option>
+    <option>Phys.Rept.</option>
+
+    <option>Phys.Rev.</option>
+    <option>Phys.Rev.Lett.</option>
+    <option>Phys. Scripta</option>
+    <option>Physica</option>
+    <option>Pisma Zh. Eksp. Teor. Fiz.</option>
+    <option>Pramana</option>
+
+    <option>Prog. Part. Nucl. Phys.</option>
+    <option>Prog. Theor. Phys.</option>
+    <option>Rept. Math. Phys.</option>
+    <option>Rept. Prog. Phys.</option>
+    <option>Rev. Mod. Phys.</option>
+    <option>Rev. Sci. Instrum.</option>
+
+    <option>Riv. Nuovo Cim.</option>
+    <option>Russ. Phys. J. (Sov. Phys. J.)</option>
+    <option>Sov. J. Nucl. Phys.</option>
+    <option>Sov. Phys. Jetp</option>
+    <option>Teor. Mat. Fiz.</option>
+    <option>Theor. Math. Phys.</option>
+
+    <option>Yad. Fiz.</option>
+    <option>Z. Phys.</option>
+    <option>Zh. Eksp. Teor. Fiz.</option>
+</select>&nbsp;&nbsp;
+vol:<input size="8" id="jvol" />
+pg: <input size="8" id="jpage" /></td>
+</tr>
+
+</tbody>
+</table>
+
+<div style="white-space: nowrap;" align="center">
+<input type="button" onclick="perform_easy_search()" value="Search" class="formbutton"/>
+</div>
+
