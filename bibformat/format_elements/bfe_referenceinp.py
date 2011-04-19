@@ -18,9 +18,12 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints reference input box
-"""
-__revision__ = "$Id$"
+"""BibFormat element - Prints reference input box"""
+
+
+from invenio.search_engine import search_unit
+from invenio.bibformat import format_record
+
 
 def format_element(bfo, reference_prefix, reference_suffix):
     """
@@ -30,90 +33,80 @@ def format_element(bfo, reference_prefix, reference_suffix):
     @param reference_suffix a suffix displayed after each reference
     """
 
-    from invenio.search_engine import search_unit
-    from invenio.bibformat import format_record
-    references = bfo.fields("999C5", escape=1)
+    if reference_prefix == None: reference_prefix = ''
+    if reference_suffix == None: reference_suffix = ''
+
     out = ""
     tableid = 0
-    inputid = ""
-    for reference in references:
-        ref_out = ''
+    for reference in bfo.fields("999C5", escape=1):
 
-#        if reference.has_key('o'):
-#            if out != "":
-#                ref_out = '</li>'
-#            ref_out += '<li><small>'+\
-#                       reference['o']+ "</small> "
-
-        display_journal = ''
-        referencetemp = ''
-        display_report = ''
-        clean_report = ''
-        clean_journal = ''
         tableid += 1
+
+        ordinal       = reference.get('o', '')
+        clean_report  = reference.get('r', '')
+        clean_journal = reference.get('s', '')
+        clean_doi     = reference.get('a', '')
+        h_key         = reference.get('h', '')
+        m_key         = reference.get('m', '')
         inputid = 'c' + str(tableid)
-        hits = []
-        if reference.has_key('r'):
-            referencetemp = reference['r']
-            # the onfocusout chgcite() js is called in the format_template citeform 
-            display_report = '<td><input type="text" name="cite" id="' + inputid + '" size="35" value="' + referencetemp + '" onChange="chgcite(this.id)"></td>'
-            clean_report = reference['r']
-        if reference.has_key('s'):
-            if reference.has_key('r'):
-                display_journal = '<td align="left" width="240">' + reference['s'] + "</td>"
-            else:
-                referencetemp = reference['s']
-                display_journal = '<td><input type="text" name="cite" id="' + inputid + '" size="35" value="'  + referencetemp + '" onChange="chgcite(this.id)"></td><td align="left" width="240">  </td>'
-            clean_journal = reference['s']
-        else: 
-            if reference.has_key('r'):
-                display_journal += '<td align="left" width="240">'
-        if clean_journal and len(hits)!=1:
-            hits = search_unit(f='journal', p=clean_journal)
-        if clean_report:
-            hits = search_unit(f='reportnumber', p=clean_report)            
-        if reference.has_key('a') and len(hits)!=1:
-            hits = search_unit(f='doi', p=reference['a'])
-        if len(hits) == 1:
-            ref_out += format_record(list(hits)[0],'hs') 
 
+        format_line = reference_prefix
+        # the onfocusout chgcite() js is called in the format_template citeform 
+        ref_out = '<td><input type="text" name="cite" size="35" value="%s" id="%s" onChange="chgcite(this.id)"></td>' % (_first_nonempty([clean_report, clean_journal, clean_doi]),inputid)
 
+        recid = _get_unique_recid_for(clean_journal, clean_report, clean_doi)
+        if recid:
+            ref_out += '<td><small>' + format_record(recid, 'hs') + '</small></td>'
         else:
+            ref_out += '<td><small>%s %s <a href="http://dx.doi.org/%s">%s</a> %s</small></td>' % (h_key, m_key, clean_doi, clean_doi, clean_journal)
 
-            if reference.has_key('h'):
-                ref_out += "<small> " + reference['h']+ ".</small> "
+        format_line = """<table id="t%(tableid)s" ><tr><td>%(ordinal)s</td><td><input id="t%(tableid)s" type="button" onclick="insRow(this.id)" value = "V"></td>%(ref_out)s</tr></table>""" % {'tableid': str(tableid), 'ref_out': ref_out, 'ordinal': ordinal}
+        format_line += reference_suffix
 
-            if reference.has_key('m'):
-                ref_out += "<small>"+ reference['m'] + ".</small> "
-
-            if reference.has_key('a'):
-                ref_out += " <small><a href=\"http://dx.doi.org/" + \
-                reference['a'] + "\">" + reference['a']+ "</a></small> "
-            if display_report:
-                ref_out += display_report               
-            if display_journal:
-                ref_out += ' ' + display_journal
-                   
-   
-
-
-
-        ref_out = '<table id="t' + str(tableid) + '" ><tr><td><input id="t' + str(tableid) + '" type="button" onclick="insRow(this.id)" value = "V"></td>' + ref_out + '</tr></table>'
-        if reference_prefix is not None and ref_out != '':
-            ref_out = reference_prefix + ref_out
-        if reference_suffix is not None and ref_out != '':
-            ref_out += reference_suffix
-
-        out += ref_out
+        out += format_line
 
     if out != '':
         out += '</li>'
 
     return out
 
+
 def escape_values(bfo):
-    """
-    Called by BibFormat in order to check if output of this element
-    should be escaped.
+    """Should BibFormat escape this element's output?
+
+    No.
     """
     return 0
+
+
+def _first_nonempty(ls):
+    """Iterate through a list, return the first value != '' or else return ''"""
+    for item in ls:
+        if item != '':
+            return item
+    return ''
+
+
+def _get_unique_recid_for(journal='', report='', doi=''):
+    """Return the recid for this set of identifiers.
+
+    If no recid can be found or if too many are found, returns 0 to indicate
+    failure.
+    """
+
+    hits = []
+    if journal:
+        hits = search_unit(f='journal', p=journal)
+    if report and len(hits) != 1:
+        hits = search_unit(f='reportnumber', p=report)
+    if doi and len(hits) != 1:
+        hits = search_unit(f='doi', p=doi)
+
+    if len(hits) > 1:
+        # FIXME: should throw exception or maybe show multiple possibilities
+        return 0
+    elif len(hits) == 1:
+        return hits.pop()
+    else:
+        return 0
+

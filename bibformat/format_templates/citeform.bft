@@ -62,7 +62,10 @@ function chgcite(txt)
    
 </script>      
 </head>      
+
 <form name="citeform" method="post" onSubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
+
+
 <input type=hidden value="1" id="fieldcnt" name="storecnt">
 <INPUT type=hidden value="test realname"   name=realname>
 <INPUT type=hidden value=sul@slac.stanford.edu   name=to id=tofield>
@@ -72,18 +75,23 @@ function chgcite(txt)
 <INPUT type=hidden name=response_msg value="thanks for using this form">
 <INPUT type=hidden name=email_msg_file value="/spires/hepnames/cite_msg.file">
 <input type=hidden name=Comments value="this is the comment">
-<table>
-<BFE_REPORT_NUMBER prefix="" suffix="" separator=" " nbMax="" default="" escape="" /> , <BFE_JOURNAL prefix="" suffix="" separator=" " nbMax="" default="" escape="" /><br>
-<BFE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/><br><BFE_AUTHORS prefix="" suffix="" default="" escape="" affiliation_suffix=")" extension="[...]" limit="3" print_links="yes" separator=" ; " print_affiliations="no" highlight="no" interactive="no" affiliation_prefix=" ("/>
-
-
-</table><br>
+<div id="detailedrecordshortreminder">
+ <div id="clip">&nbsp;</div>
+ <div id="HB">
+  <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+   <BFE_INSPIRE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/>
+  </a><br />
+  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br />
+  <BFE_REPORT_NUMBER prefix="" suffix=", " separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL prefix="" suffix="" separator=" " nbMax="" default="" escape="" /><br />
+ </div>
+</div>
+<div style="clear:both;height:1px">&nbsp;</div>
 <table>
         <TR>      
           <TD class=left><STRONG> Your Email</STRONG></TD>          
           <TD class=right><INPUT size=24 name=username id=username> </TD></TR>   
 </table>
-<table id="t0"><tr><td><input id="t0" type="button" onclick="insRow(this.id)" value = "V"></td>
+<table id="t0"><tr><td></td><td><input id="t0" type="button" onclick="insRow(this.id)" value = "V"></td>
 <input type="hidden" name="irn" id="irn" value= "<BFE_SPIRES_IRN />">
 <td><input type="text" name="cite" id="x0" size="35" value=""></td><td align="left" width="240"></tr></table>
 

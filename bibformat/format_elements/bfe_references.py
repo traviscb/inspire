@@ -20,7 +20,10 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints references
 """
-__revision__ = "$Id$"
+
+from invenio.config import CFG_SITE_URL
+from invenio.search_engine import search_unit
+from invenio.bibformat import format_record
 
 def format_element(bfo, reference_prefix, reference_suffix):
     """
@@ -30,19 +33,11 @@ def format_element(bfo, reference_prefix, reference_suffix):
     @param reference_suffix a suffix displayed after each reference
     """
 
-    from invenio.search_engine import search_unit
-    from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
-    out = ""
+    out = "<div><a href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hcite'+"'>Click here to update these references</a></div>"
 
     for reference in references:
         ref_out = ''
-
-#        if reference.has_key('o'):
-#            if out != "":
-#                ref_out = '</li>'
-#            ref_out += '<li><small>'+\
-#                       reference['o']+ "</small> "
 
         display_journal = ''
         display_report = ''
