@@ -65,7 +65,7 @@ def format_element(bfo, width="50"):
         ####FIXME
         key = bfo.field("100a").split(' ')[0].lower() + ":" + \
               bfo.field("269c").split('-')[0] + \
-              chr((recID % 26) + 97) + chr(((recID / 26) % 26) + 97)
+              chr((int(bfo.recID) % 26) + 97) + chr(((int(bfo.recID) / 26) % 26) + 97)
     out += key + ','
 
         #If author cannot be found, print a field key=recID

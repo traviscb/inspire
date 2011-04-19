@@ -33,7 +33,7 @@ def format_element(bfo, us="yes"):
     locations for it (date, eprint, journal, date added)
     @params us us style date Mon dd, yyyy (default)  otherwise dd mon yyyy
     """
-    datestruct=get_date(bfo)
+    datestruct = get_date(bfo)
 
     dummy_time = ( 0, 0, 44, 2, 320, 0)
     #if we have all 3 use dategui:
@@ -65,8 +65,8 @@ def get_date(bfo):
 
     #true date
     date = bfo.fields('269__c')
-    if date:
-        datestruct=parse_date(date[0])
+    if date and date[0]:
+        datestruct = parse_date(date[0])
         if datestruct[0]:
             return(datestruct)
 
@@ -74,7 +74,7 @@ def get_date(bfo):
     #arxiv date
     arxiv = get_arxiv(bfo,category="no")
     if arxiv:
-        date=re.search('(\d+)',arxiv[0]).groups()[0]
+        date = re.search('(\d+)',arxiv[0]).groups()[0]
         if len(date) >=4:
             year = date[0:2]
             if year > '90':
@@ -89,13 +89,13 @@ def get_date(bfo):
 
     #journal year
     if bfo.fields('773__y'):
-        date= parse_date(bfo.fields('773__y')[0]+'0000')
+        date = parse_date(bfo.fields('773__y')[0])
         if date[0]:
             return date
 
     #date added
     if bfo.fields('961__x'):
-        date= parse_date(bfo.fields('961__x')[0])
+        date = parse_date(bfo.fields('961__x')[0])
         if date[0]:
             return date
 
@@ -115,4 +115,4 @@ def parse_date(datetext):
     datetext = datetext.split(' ')[0]
     if datetext.count('-') > 0:
         return [int(date) for date in datetext.split('-')]
-    return int(datetext),
+    return [int(datetext)]
