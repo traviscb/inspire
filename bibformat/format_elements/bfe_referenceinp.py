@@ -34,7 +34,8 @@ def format_element(bfo, reference_prefix, reference_suffix):
     from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
     out = ""
-    tableid = 0     
+    tableid = 0
+    inputid = ""
     for reference in references:
         ref_out = ''
 
@@ -50,17 +51,19 @@ def format_element(bfo, reference_prefix, reference_suffix):
         clean_report = ''
         clean_journal = ''
         tableid += 1
+        inputid = 'c' + str(tableid)
         hits = []
         if reference.has_key('r'):
             referencetemp = reference['r']
-            display_report = '<td><input type="text" name="cite" size="35" value="'  + referencetemp + '"></td>'
+            # the onfocusout chgcite() js is called in the format_template citeform 
+            display_report = '<td><input type="text" name="cite" id="' + inputid + '" size="35" value="' + referencetemp + '" onChange="chgcite(this.id)"></td>'
             clean_report = reference['r']
         if reference.has_key('s'):
             if reference.has_key('r'):
                 display_journal = '<td align="left" width="240">' + reference['s'] + "</td>"
             else:
                 referencetemp = reference['s']
-                display_journal = '<td><input type="text" name="cite" size="35" value="'  + referencetemp + '"></td><td align="left" width="240">  </td>'
+                display_journal = '<td><input type="text" name="cite" id="' + inputid + '" size="35" value="'  + referencetemp + '" onChange="chgcite(this.id)"></td><td align="left" width="240">  </td>'
             clean_journal = reference['s']
         else: 
             if reference.has_key('r'):
