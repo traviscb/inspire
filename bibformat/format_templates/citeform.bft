@@ -2,23 +2,90 @@
 <description>user form for updating cites</description>
 <head>      
 <script type="text/javascript">      
-function insRow(z){      
-    var x=document.getElementById(z).insertRow(1)      
-    var y=x.insertCell(0)
-    var u=x.insertCell(1)      
-    u.innerHTML='<input type="text" name="citation" size="35">'      
-}      
+function insRow(z){     
+    var cnt=document.getElementById('fieldcnt').value; 
+    var inpid= 'x' + cnt;
+    var x=document.getElementById(z).insertRow(1);      
+    var y=x.insertCell(0);
+    var u=x.insertCell(1);     
+    u.innerHTML='<input type="text" name="cite" size="35" id="' + inpid + '" >';
+    //alert(u.innerHTML);  
+    cnt++;
+    document.getElementById('fieldcnt').value=cnt;     
+}   
+function changec(){
+  var arr = new Array();
+  arr = document.getElementsByName('cite');
+
+  var xcnt = document.getElementById('fieldcnt').value;
+  var ccnt = arr.length - xcnt;
+
+
+  //alert(xcnt + ' xcnt');
+
+  for (i=1;i<=ccnt;i++)
+   {
+   var inputid = 'c' + i;
+   //alert(inputid);
+   var citefield = document.getElementById(inputid).value;
+   var chgcite = 'citation = ' + citefield + ';';
+   // alert(chgcite);
+   document.getElementById(inputid).value=chgcite;
+   //alert(chgcite + 'should be in ' + inputid);
+
+   }
+  //alert(xcnt);
+  var ncnt=xcnt-1;
+ // alert(ncnt); 
+  for (i=0;i<=ncnt;i++) 
+   { 
+     var inputid = 'x' + i;
+    //alert(inputid)
+     var citefield = document.getElementById(inputid).value;
+     if (citefield.length != 0) {
+     var chgcite = 'cite = ' + citefield + ';';
+     document.getElementById(inputid).value=chgcite;
+     }
+   }
+  var irnv=document.getElementById('irn').value;
+  var convirn = irnv.replace('SPIRES-',' ');
+  document.getElementById('irn').value=convirn;
+ return true;
+}  
+function chgcite(txt)
+{ 
+ // alert(txt);
+  var citev=document.getElementById(txt).value;
+   citev += '**';
+  document.getElementById(txt).value=citev;
+} 
+   
 </script>      
 </head>      
-<form method="post" action="mailto:sul@slac.stanford.edu">
+<form name="citeform" method="post" onSubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
+<input type=hidden value="1" id="fieldcnt" name="storecnt">
+<INPUT type=hidden value="test realname"   name=realname>
+<INPUT type=hidden value=sul@slac.stanford.edu   name=to id=tofield>
+<input type="hidden" name="debug" value="1">
+<INPUT type=hidden value=slaclib2@slac.stanford.edu   name=form_contact id=fcfield>
+<INPUT type=hidden value="CITATION FORM posting" name=subject>
+<INPUT type=hidden name=response_msg value="thanks for using this form">
+<INPUT type=hidden name=email_msg_file value="/spires/hepnames/cite_msg.file">
+<input type=hidden name=Comments value="this is the comment">
 <table>
 <BFE_REPORT_NUMBER prefix="" suffix="" separator=" " nbMax="" default="" escape="" /> , <BFE_JOURNAL prefix="" suffix="" separator=" " nbMax="" default="" escape="" /><br>
 <BFE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/><br><BFE_AUTHORS prefix="" suffix="" default="" escape="" affiliation_suffix=")" extension="[...]" limit="3" print_links="yes" separator=" ; " print_affiliations="no" highlight="no" interactive="no" affiliation_prefix=" ("/>
 
+
 </table><br>
+<table>
+        <TR>      
+          <TD class=left><STRONG> Your Email</STRONG></TD>          
+          <TD class=right><INPUT size=24 name=username id=username> </TD></TR>   
+</table>
 <table id="t0"><tr><td><input id="t0" type="button" onclick="insRow(this.id)" value = "V"></td>
-<input type="hidden" name="irn" value= "  <BFE_SPIRES_IRN /> ">
-<td><input type="text" name="cite" size="35" value=" "></td><td align="left" width="240"></tr></table>
+<input type="hidden" name="irn" id="irn" value= "<BFE_SPIRES_IRN />">
+<td><input type="text" name="cite" id="x0" size="35" value=""></td><td align="left" width="240"></tr></table>
 
 <BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
 <input type="submit" name="submit" value="Send" /> 
