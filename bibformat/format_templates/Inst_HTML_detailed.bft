@@ -8,13 +8,33 @@ subfields_separator=" " tag="110u" limit="" filter_subcode=""/> </td><td
 width="30%">
 <BFE_BFO_RECCNT prefix="" suffix=""  fvalue="affiliation" tag="110__u"/> </td></tr></table>
 
-
-<table><tr><td>
 <BFE_INSPIRE_INST_ADDRESS  separator="<br />"/> <br>
-
-
 <BFE_URL prefix="" suffix="" default="" escape="" style="" separator="; "/>
+<br />
 
-<br></td></tr></table>
+<h4> Additional Information </h4>
+<dl>
+<BFE_FIELD prefix="<dt>Institution Name:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>" tag="110a" escape="">
+<BFE_FIELD prefix="<dt>Department:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>"  tag="110b" escape="">
+<BFE_FIELD prefix="<dt>SPIRES ID:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>"  tag="110u" escape="">
+<BFE_FIELD prefix="<dt>INSPIRE ID:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>" tag="110t" escape="">
+</dl>
+
+<dl>
+<BFE_FIELD prefix="<dt>City:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>" tag="371b" escape="">
+<BFE_FIELD prefix="<dt>State/Province:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>" tag="371c" escape="">
+<BFE_FIELD prefix="<dt>Country:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>" tag="371d" escape="">
+<BFE_FIELD prefix="<dt>Postal Code:</dt><dd>" instances_separator="<br />"
+ suffix="</dd>" tag="371e" escape="">
+</dl>
+
+
 &nbsp
 </div>
