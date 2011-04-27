@@ -39,7 +39,6 @@ def format_element(bfo, reference_prefix, reference_suffix):
     out = ""
     tableid = 0
     for reference in bfo.fields("999C5", escape=1):
-
         tableid += 1
 
         ordinal       = reference.get('o', '')
@@ -59,8 +58,8 @@ def format_element(bfo, reference_prefix, reference_suffix):
             ref_out += '<td><small>' + format_record(recid, 'hs') + '</small></td>'
         else:
             ref_out += '<td><small>%s %s <a href="http://dx.doi.org/%s">%s</a> %s</small></td>' % (h_key, m_key, clean_doi, clean_doi, clean_journal)
-
-        format_line = """<table id="t%(tableid)s" ><tr><td>%(ordinal)s</td><td><input id="t%(tableid)s" type="button" onclick="insRow(this.id)" value = "V"></td>%(ref_out)s</tr></table>""" % {'tableid': str(tableid), 'ref_out': ref_out, 'ordinal': ordinal}
+        #<input id="t%(tableid)s" type="button" onclick="insRow(this.id)" value = "V"> (the previous button for safekeeping) 
+        format_line = """<table id="t%(tableid)s" ><tr id="tr%(tableid)s"><td>%(ordinal)s</td><td><input id="t%(tableid)s" type="image"  src="/img/add.png" onclick="insertRowAfter(%(tableid)s); return false;" value = "+"></td>%(ref_out)s</tr></table>""" % {'tableid': str(tableid), 'ref_out': ref_out, 'ordinal': ordinal}
         format_line += reference_suffix
 
         out += format_line
