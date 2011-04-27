@@ -1,0 +1,82 @@
+<name>pubnote</name>
+<description>Output arxiv number, pub-note, and report numbers</description>
+<p>
+ <div id="detailedrecordshortreminder">
+  <a class = "titlelink" href="<BFE_SERVER_INFO var=recurl>">
+   <BFE_INSPIRE_TITLE prefix="" suffix="" default="" escape="" highlight="no"  />
+  </a><br />
+  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br />
+ 
+
+</b><small>arXiv IDs, Publication Notes, or Report Numbers for inserting into reference list: </small><br>
+
+
+<b><BFE_REPORT_NUMBERS prefix="" suffix="<br>"  default="" escape="0" separator="<br>" incl_arxiv="yes" links="no"/>
+
+<BFE_JOURNAL_PUBLICATION_TITLE prefix="" suffix="," separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_VOLUME prefix="" suffix="," separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_PAGE prefix="" suffix="<br>" separator=" " nbMax="" default="" escape="" /> 
+</div>
+
+<!--
+   <div class="pagebody"><div class="pagebodystripemiddle">
+        <form name="search" action="http://liblin9.slac.stanford.edu/search" method="get">
+        <input type="hidden" name="ln" value="en" />
+            <table class="searchbox simplesearch">
+             <thead>
+              <tr>
+
+               <th colspan="3" class="searchboxheader">
+                Search:
+               </th>
+              </tr>
+             </thead>
+             <tbody>
+              <tr valign="top">
+                <td class="searchboxbody"><input type="text" name="p" size="40" value="877" class="simplesearchfield"/></td>
+                <td class="searchboxbody"><select name="f"><option value="">any field</option><option value="affiliation">affiliation</option><option value="author">author</option><option value="caption">caption</option><option value="collaboration">collaboration</option><option value="experiment">experiment</option><option value="exactauthor">exact author</option><option value="fulltext">fulltext</option><option value="journal">journal</option><option value="keyword">keyword</option><option value="reference">reference</option><option value="reportnumber">report number</option><option value="recid" selected="selected">record ID</option><option value="title">title</option><option value="year">year</option></select></td>
+
+                <td class="searchboxbody">
+                  <input class="formbutton" type="submit" name="action_search" value="Search" />
+                  <input class="formbutton" type="submit" name="action_browse" value="Browse" />&nbsp;
+                </td>
+              </tr>
+              <tr valign="bottom">
+                <td colspan="3" align="right" class="searchboxbody">
+                  <small>
+                    <a href="http://liblin9.slac.stanford.edu/help/search-tips">Search Tips</a> ::
+                    <a href="http://liblin9.slac.stanford.edu/search?ln=en&amp;f1=recid&amp;as=1&amp;p1=877">Advanced Search</a>
+
+                  </small>
+                </td>
+              </tr>
+             </tbody>
+            </table>
+ 
+                 <table class="searchbox">
+                 <thead>
+                  <tr>
+                   <th class="searchboxheader">
+                    Sort by:
+                   </th>
+
+                   <th class="searchboxheader">
+                    Display results:
+                   </th>
+                   <th class="searchboxheader">
+                    Output format:
+                   </th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                  <tr valign="bottom">
+
+                   <td valign="top" class="searchboxbody">
+                     <select name="sf" class="address"><option value="" selected="selected">latest first</option><option value="author">author</option><option value="reportnumber">report number</option><option value="title">title</option><option value="year">year</option></select> <select name="so" class="address"><option value="a">asc.</option><option value="d" selected="selected">desc.</option></select> <select name="rm" class="address"><option value="" selected="selected">- or rank by -</option><option value="wrd">word similarity</option><option value="citation">times cited</option></select>
+                   </td>
+
+                   
+                   <td valign="top" class="searchboxbody"><select name="of" class="address"><option selected value="hpub">pubnote</option></select></td>
+
+                  </tr>
+                 </tbody>
+                </table></form>
+--!>
