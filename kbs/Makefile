@@ -3,6 +3,7 @@ include ../config.mk
 
 WEBDESC='Mapping of SPIRES abbreviations for URLs to Displayable names'
 OADESC='Journals that are fully OA'
+CODDESC='Coden to short title mappings'
 PWD=`pwd`
 
 all:
@@ -19,13 +20,18 @@ install-dbchanges:
 	make delete-weblinks
 	make delete-oalinks
 	make delete-talktype
+	make delete-coden
 	make load-weblinks-knowledge-base
 	make load-weblinks-knowledge-base
 	make load-talktype-knowledge-base
+	make load-coden-knowledge-base
 	@echo "Done."
 
 delete-weblinks:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='WEBLINKS')" | $(BINDIR)/dbexec
+
+delete-coden:
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='CODENS')" | $(BINDIR)/dbexec
 
 delete-oalinks:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='OALINKS')" | $(BINDIR)/dbexec
@@ -39,6 +45,17 @@ load-weblinks-knowledge-base:
 LOAD DATA LOCAL INFILE '$(PWD)/weblinks.dat' replace INTO TABLE templinks;\
 update templinks set id_knwKB= (select id from knwKB where name='WEBLINKS');\
 insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
+"|$(BINDIR)/dbexec
+
+KBNAME="CODENS"
+KBFILE="coden.kb"
+KBTMP="tempcoden"
+load-coden-knowledge-base:
+	echo "INSERT into knwKB (name, description) VALUES('$(KBNAME)',$(CODDESC)) on duplicate key update description = $(CODDESC)" | $(BINDIR)/dbexec
+	echo " create temporary table $(KBTMP) like knwKBRVAL;\
+LOAD DATA LOCAL INFILE '$(PWD)/$(KBFILE)' replace INTO TABLE $(KBTMP);\
+update $(KBTMP) set id_knwKB= (select id from knwKB where name='$(KBNAME)');\
+insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from $(KBTMP) ;\
 "|$(BINDIR)/dbexec
 
 load-oalinks-knowledge-base:
