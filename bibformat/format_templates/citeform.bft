@@ -1,10 +1,7 @@
 <name>citeform</name>
 <description>user form for updating cites</description>
 <head>      
-<!--
-  I include this because it makes things like drop-down boxes in jquery look nicer.  It's not important for this demo,
-  but was just included from something else I was doing.
-  -->
+<!-- I include this because it makes things like drop-down boxes in jquery look nicer.  -->
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/themes/redmond/jquery-ui.css" />
 
 <!-- 
@@ -14,178 +11,170 @@
 <script type="text/javascript" src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
 <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js'></script>
 
-<!-- 
-  Here is where I do my business
-  -->
+<!-- Here is where I do my business -->
 
-<script type="text/javascript">  
-   /*
-      This selects the whole document and creates an anonymous function which
-      is called when the page is done rendering in the user's browser.  We could
-      do anything, but I just set a global variable.
-    */
-    $(document).ready(function() {
-        row_counter = 0;
-    });
+  <script type="text/javascript">  
+  /*
+     This selects the whole document and creates an anonymous function which
+     is called when the page is done rendering in the user's browser.  We could
+     do anything, but I just set a global variable.
+   */
 
-    /* 
-      Build a table row with a given ID and return its HTML.  This is just a 
-      convenience so that insertRowAfter can be tidier.
-     */
-    function make_table_row(id_number) {
-        var cnt=document.getElementById('fieldcnt').value; 
-        var inpid= 'x' + cnt;
-        cnt++;
-        document.getElementById('fieldcnt').value=cnt;
-        retval = '<tr id="tr'+id_number+'"><td></td><td><input id="button_'+id_number+'" type="image" onclick="insertRowAfter('+id_number+'); return false;" value = "+" src="/img/add.png"> </td>';
-        retval += '<td><input type="text" style="background-color: #FDFDF0;" name="cite" size="35" id="' + inpid + '" ></td></tr>';
-        return retval
-    }
+  var gCODENS = [];     // coden mapping global filled in by BFE
 
-    /*
-      This is the part that uses jQuery to insert a row after a table button.
-    */
-    function insertRowAfter(caller_id) {
-         var arr = new Array();
-        arr = document.getElementsByName('cite');
-        var row_counter = arr.length;  
+  $(document).ready(function() {
+          row_counter = 0;
+          });
+
+/* 
+   Build a table row with a given ID and return its HTML.  This is just a 
+   convenience so that insertRowAfter can be tidier.
+ */
+function make_table_row(id_number) {
+    var cnt=document.getElementById('fieldcnt').value; 
+    var inpid= 'x' + cnt;
+    cnt++;
+    document.getElementById('fieldcnt').value=cnt;
+    retval = '<tr id="tr'+id_number+'"><td></td><td><input id="button_'+id_number+'" type="image" onclick="insertRowAfter('+id_number+'); return false;" value = "+" src="/img/add.png"> </td>';
+    retval += '<td><input type="text" style="background-color: #FDFDF0;" name="cite" size="35" id="' + inpid + '" ></td></tr>';
+    return retval
+}
+
+/*
+   Use jQuery to insert a row after a table button.
+ */
+function insertRowAfter(caller_id) {
+    var arr = new Array();
+    arr = document.getElementsByName('cite');
+    var row_counter = arr.length;  
     //    alert(row_counter);
 
     //    row_counter += 1;
 
-        /* Parent's parent in the enclosing <tr>; we get its id and prepend a '#'*/
-        /* see also: http://api.jquery.com/category/selectors/ */
-        var row_selector = '#tr' + caller_id;
+    /* Parent's parent in the enclosing <tr>; we get its id and prepend a '#'*/
+    /* see also: http://api.jquery.com/category/selectors/ */
+    var row_selector = '#tr' + caller_id;
 
-        /* Using its ID we can grab the row, then say we want some arbitrary HTML
-           dumped after it in the linear representation of the DOM
-         */
-        $(row_selector).after( make_table_row(row_counter) );
+    /* Using its ID we can grab the row, then say we want some arbitrary HTML
+       dumped after it in the linear representation of the DOM
+     */
+    $(row_selector).after( make_table_row(row_counter) );
 
-        /* This is a jQuery thing.  Unless you're actually returning a value,
-           pretty much all jQuery things return false.
-         */
-        return false;
-    }
-    
-function insRow(z){     
-    var cnt=document.getElementById('fieldcnt').value; 
-    var inpid= 'x' + cnt;
-    var x=document.getElementById(z).insertRow(1);
-    var q=x.insertCell(0);      
-    var y=x.insertCell(1);
-    var u=x.insertCell(2); 
-    y.innerHTML='new';    
-    u.innerHTML='<input type="text" name="cite" size="35" id="' + inpid + '" >';
-    //alert(u.innerHTML);  
-    cnt++;
-    document.getElementById('fieldcnt').value=cnt;     
-}   
+    /* This is a jQuery thing.  Unless you're actually returning a value,
+       pretty much all jQuery things return false.
+     */
+    return false;
+}
+
 function changec(){
-// check if email field is blank
-var checkStr="";
-checkStr = document.getElementById('username').value;
-//alert(checkStr);
-if (checkStr == "") {
-alert("Please enter a value for the \"Email\" field.");
-document.citeform.username.focus();
-return (false);
-}
+    // check if email field is blank
+    var checkStr="";
+    checkStr = document.getElementById('username').value;
+    //alert(checkStr);
+    if (checkStr == "") {
+        alert("Please enter a value for the \"Email\" field.");
+        document.citeform.username.focus();
+        return (false);
+    }
 
-// test if valid email address, must have @ and .
-var checkEmail = "@.";
-var EmailValid = false;
-var EmailAt = false;
-var EmailPeriod = false;
-for (i = 0;  i < checkStr.length;  i++)
-{
-ch = checkStr.charAt(i);
-for (j = 0;  j < checkEmail.length;  j++)
-{
-if (ch == checkEmail.charAt(j) && ch == "@")
-EmailAt = true;
-if (ch == checkEmail.charAt(j) && ch == ".")
-EmailPeriod = true;
-	  if (EmailAt && EmailPeriod)
-		break;
-	  if (j == checkEmail.length)
-		break;
-	}
-	// if both the @ and . were in the string
-if (EmailAt && EmailPeriod)
-{
-		EmailValid = true
-//		break;
-	}
-}
-if (!EmailValid)
-{
-alert("The \"email\" field must contain an \"@\" and a \".\".");
-document.citeform.username.focus();
-return (false);
+    // test if valid email address, must have @ and .
+    var checkEmail = "@.";
+    var EmailValid = false;
+    var EmailAt = false;
+    var EmailPeriod = false;
+    for (i = 0;  i < checkStr.length;  i++)
+    {
+        ch = checkStr.charAt(i);
+        for (j = 0;  j < checkEmail.length;  j++)
+        {
+            if (ch == checkEmail.charAt(j) && ch == "@")
+                EmailAt = true;
+            if (ch == checkEmail.charAt(j) && ch == ".")
+                EmailPeriod = true;
+            if (EmailAt && EmailPeriod)
+                break;
+            if (j == checkEmail.length)
+                break;
+        }
+        // if both the @ and . were in the string
+        if (EmailAt && EmailPeriod)
+        {
+            EmailValid = true
+                //		break;
+        }
+    }
+    if (!EmailValid)
+    {
+        alert("The \"email\" field must contain an \"@\" and a \".\".");
+        document.citeform.username.focus();
+        return (false);
 
+    }  
+
+    //this section modifies the fields...
+    var arr = new Array();
+    arr = document.getElementsByName('cite');
+
+    var xcnt = document.getElementById('fieldcnt').value;
+    var ccnt = arr.length - xcnt;
+
+
+    //alert(xcnt + ' xcnt');
+
+    for (i=1;i<=ccnt;i++)
+    {
+        var inputid = 'c' + i;
+        //alert(inputid);
+        var checkComExp = /\,/;
+        var citefield = document.getElementById(inputid).value;
+        var journvar = citefield;
+
+        //change the short title to coden here
+        if (citefield.match(checkComExp)){
+            var journvar = citefield.split(",");
+            journvar = citefield.split(",");
+            if (gCODENS[journvar[0]] != null) journvar = gCODENS[journvar[0]];
+        }
+        //var chgcite = 'citation = ' + citefield + ';';
+        var chgcite = 'citation = ' + journvar + ';';
+        // alert(chgcite);
+        document.getElementById(inputid).value=chgcite;
+        //alert(chgcite + 'should be in ' + inputid);
+
+    }
+    //alert(xcnt);
+    var ncnt=xcnt-1;
+    // alert(ncnt); 
+    for (i=0;i<=ncnt;i++) 
+    { 
+        var inputid = 'x' + i;
+        //alert(inputid)
+        var citefield = document.getElementById(inputid).value;
+        if (citefield.match(checkComExp)){
+
+            var journvar= citefield.split(",");
+            alert(journvar[0]);    
+        }
+        if (citefield.length != 0) {
+
+            var chgcite = 'cite = ' + citefield + ';';
+            document.getElementById(inputid).value=chgcite;
+        }
+    }
+    var irnv=document.getElementById('irn').value;
+    var convirn = irnv.replace('SPIRES-',' ');
+    document.getElementById('irn').value=convirn;
+    return true;
 }  
 
-//this section modifies the fields...
-  var arr = new Array();
-  arr = document.getElementsByName('cite');
-
-  var xcnt = document.getElementById('fieldcnt').value;
-  var ccnt = arr.length - xcnt;
-
-
-  //alert(xcnt + ' xcnt');
-
-  for (i=1;i<=ccnt;i++)
-   {
-   var inputid = 'c' + i;
-   //alert(inputid);
-   var checkComExp = /\,/;
-   var citefield = document.getElementById(inputid).value;
-   //change the short title to coden here
-   if (citefield.match(checkComExp)){
-
-       var journvar= citefield.split(",");
-        alert(journvar[0]);    
-      }
-   var chgcite = 'citation = ' + citefield + ';';
-   // alert(chgcite);
-   document.getElementById(inputid).value=chgcite;
-   //alert(chgcite + 'should be in ' + inputid);
-
-   }
-  //alert(xcnt);
-  var ncnt=xcnt-1;
- // alert(ncnt); 
-  for (i=0;i<=ncnt;i++) 
-   { 
-     var inputid = 'x' + i;
-    //alert(inputid)
-     var citefield = document.getElementById(inputid).value;
-       if (citefield.match(checkComExp)){
-
-       var journvar= citefield.split(",");
-        alert(journvar[0]);    
-      }
-     if (citefield.length != 0) {
-
-     var chgcite = 'cite = ' + citefield + ';';
-     document.getElementById(inputid).value=chgcite;
-     }
-   }
-  var irnv=document.getElementById('irn').value;
-  var convirn = irnv.replace('SPIRES-',' ');
-  document.getElementById('irn').value=convirn;
- return true;
-}  
 function chgcite(txt)
 { 
- // alert(txt);
-  var citev=document.getElementById(txt).value;
-   citev += '**';
-  document.getElementById(txt).value=citev;
+    // alert(txt);
+    var citev=document.getElementById(txt).value;
+    citev += '**';
+    document.getElementById(txt).value=citev;
 } 
-   
+
 </script>      
 </head>      
 
