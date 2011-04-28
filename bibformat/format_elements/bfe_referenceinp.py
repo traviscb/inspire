@@ -21,6 +21,9 @@
 """BibFormat element - Prints reference input box"""
 
 
+import simplejson
+
+from invenio.bibknowledge import get_kb_mappings
 from invenio.search_engine import search_unit
 from invenio.bibformat import format_record
 
@@ -64,8 +67,10 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
         out += format_line
 
-    if out != '':
-        out += '</li>'
+    # In our BFT we will want to have an onSubmit() handler which substitutes
+    # every short title for a coden; this makes the data for that available
+    #out += '\n<script type="text/javascript">gCODENS = %s</script>\n' % (get_kb_mappings_json('CODEN_MAP'), )
+    out += _get_json_dump_of_codens()
 
     return out
 
@@ -108,4 +113,13 @@ def _get_unique_recid_for(journal='', report='', doi=''):
         return hits.pop()
     else:
         return 0
+
+def _get_json_dump_of_codens():
+    """Dump codens to a global variable where our javascript can get it.
+
+    In our BFT we will want to have an onSubmit() handler which substitutes
+    every short title for a coden; this makes the data for that available"""
+
+    import simplejson
+    return '\n<script type="text/javascript">gCODENS = %s</script>\n' % simplejson.dumps(dict([(x['value'], x['key']) for x in get_kb_mappings('CODENS')]))
 
