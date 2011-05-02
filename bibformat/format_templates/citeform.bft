@@ -223,8 +223,8 @@ function chgcite(txt)
 </textarea> <b><small>(Optional)</small></b> </TD></TR>    
 </table>
 
-<a href="http://liblin9.slac.stanford.edu/search?ln=en&p=&f=recid&action_search=Search&c=HEP&sf=&so=d&rm=&rg=25&of=hpub" target="_blank"> open search window with pubnote format</a> &nbsp; &nbsp;
-<a href="http://liblin9.slac.stanford.edu/help/citeform" > help with this form</a>
+<a href="http://insplnx1.slac.stanford.edu/search?ln=en&p=&f=recid&action_search=Search&c=HEP&sf=&so=d&rm=&rg=25&of=hpub" target="_blank"> open search window with pubnote format</a> &nbsp; &nbsp;
+<a href="http://insplnx1.slac.stanford.edu/help/citeform" > help with this form</a>
 
 
 <br> 
