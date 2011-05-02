@@ -1,0 +1,63 @@
+## -*- mode: html; coding: utf-8; -*-
+
+## This file is part of Invenio.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+##
+## Invenio is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## Invenio is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with Invenio; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+<!-- WebDoc-Page-Title: _(Corrections)_ -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+
+
+
+<h4>
+Please note that all corrections are made in both SPIRES and INSPIRE.
+There is no need to send corrections twice.
+</h4>
+
+
+
+  <h2>Citations/References</h2>
+<p>
+Welcome to the new Inspire Citation form.   This form is intended to make easier the
+task of communicating new or missed references to be added to papers.  If there is a
+problem with the form, you can still use
+<a href = "http://www.slac.stanford.edu/spires/hep/corrections.shtml">instructions as with SPIRES</a>.
+<p>
+please email <a href="mailto:spires.slac.stanford.edu">spires.slac.stanford.edu</a>  with any issues, suggestions, or problems with this form.
+<p>
+On the form, you will be presented with input boxes with the current references as we
+have them in Inspire, and to the right - the paper in Inspire that the reference belongs.
+If a reference needs correcting, simply change the field.   If references need to be
+added or inserted, click on button to left of the input field, a new input field will
+will insert below that line.  If you have mistakenly opened too many boxes, do not
+be concerned,  they'll be ignored.<p>
+
+During the submit process, the data in the form will change, and form is submitted to
+our RT staff for review.<p>
+
+Above the input boxes for references, are boxes for email, name, and comments, of which
+a valid email is required for form to properly be submitted.<p>
+
+below the comments box is a link to another Inspire search page,  with a "pubnote" format
+pre-set.  In this page, you may search for the papers in inspire that you wish to reference
+in the form, and you'll be presented with a brief display of the paper and the eprint
+number, report, and/or publication note that you can paste into the Citation form in the
+input field.
+
+
+
+</p>
