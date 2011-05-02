@@ -131,13 +131,16 @@ function changec(){
 
         //change the short title to coden here
         if (citefield.match(checkComExp)){
-            var journvar = citefield.split(",");
             journvar = citefield.split(",");
-            if (gCODENS[journvar[0]] != null) journvar = gCODENS[journvar[0]];
+            var shorttitlev = journvar[0];
+            var codenv = gCODENS[journvar[0]];
+            if (codenv != null) { journvar[0] = codenv
+           }
+          //  alert(journvar[0]);
         }
-        //var chgcite = 'citation = ' + citefield + ';';
+        
         var chgcite = 'citation = ' + journvar + ';';
-        // alert(chgcite);
+      // alert(chgcite);
         document.getElementById(inputid).value=chgcite;
         //alert(chgcite + 'should be in ' + inputid);
 
@@ -150,14 +153,19 @@ function changec(){
         var inputid = 'x' + i;
         //alert(inputid)
         var citefield = document.getElementById(inputid).value;
+        var journvar = citefield;
         if (citefield.match(checkComExp)){
 
             var journvar= citefield.split(",");
-            alert(journvar[0]);    
+            var shorttitlev = journvar[0];
+            var codenv = gCODENS[journvar[0]];
+            if (codenv != null) { journvar[0] = codenv
+           }
+            //alert(journvar[0]);
         }
         if (citefield.length != 0) {
 
-            var chgcite = 'cite = ' + citefield + ';';
+        var chgcite = 'citation = ' + journvar + ';';
             document.getElementById(inputid).value=chgcite;
         }
     }
@@ -182,7 +190,7 @@ function chgcite(txt)
 
 
 <input type=hidden value="1" id="fieldcnt" name="storecnt">
-<INPUT type=hidden value=sul@slac.stanford.edu   name=to id=tofield>
+<INPUT type=hidden value=spires@slac.stanford.edu   name=to id=tofield>
 <!--<input type="hidden" name="debug" value="1">--!>
 <INPUT type=hidden value=spires@slac.stanford.edu   name=form_contact id=fcfield>
 <INPUT type=hidden value="(TEST)CITATION FORM posting (TEST - Please ignore)" name=subject>
@@ -215,7 +223,8 @@ function chgcite(txt)
 </textarea> <b><small>(Optional)</small></b> </TD></TR>    
 </table>
 
-<a href="http://liblin9.slac.stanford.edu/search?ln=en&p=&f=recid&action_search=Search&c=HEP&sf=&so=d&rm=&rg=25&of=hpub" target="_blank"> open search window with pubnote format</a>
+<a href="http://liblin9.slac.stanford.edu/search?ln=en&p=&f=recid&action_search=Search&c=HEP&sf=&so=d&rm=&rg=25&of=hpub" target="_blank"> open search window with pubnote format</a> &nbsp; &nbsp;
+<a href="http://liblin9.slac.stanford.edu/help/citeform" > help with this form</a>
 
 
 <br> 
