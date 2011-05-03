@@ -34,7 +34,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
     """
 
     references = bfo.fields("999C5", escape=1)
-    out = "<div><a href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hcite'+"'>Click here to update these references</a></div>"
+    out = "<div id='citeform_link_box'><a id='citeform_link' href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hcite'+"'>Click here to update these references</a></div>"
 
     for reference in references:
         ref_out = ''
