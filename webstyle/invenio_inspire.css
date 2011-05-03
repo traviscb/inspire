@@ -2632,5 +2632,15 @@ td.tips-rhs {
     width: 45%;
 }
 
+/* citeform.bft and related */
+#citeform_link_box {
+    text-align: right;
+    background-color: #ffcc99;
+}
+#citeform_link {
+    text-align: right;
+    text-decoration: underline;
+}
+
 
 /* end of inspire.css */
