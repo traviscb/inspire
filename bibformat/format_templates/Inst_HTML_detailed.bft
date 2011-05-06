@@ -8,7 +8,7 @@ extension="" instances_separator=" & " tag="110u"/>
 extension="" instances_separator=" & " tag="110t"/> 
 </td>
 <td width="30%">
-<BFE_BFO_RECCNT prefix="" suffix=""  fvalue="affiliation" tag="110__u"/> </td></tr></table>
+<BFE_BFO_RECCNT prefix="" suffix=""  fvalue="affiliation" items="Papers" tag="110__u"/> </td></tr></table>
 
 <BFE_FIELD prefix="" instances_separator=" "
  suffix="</dd>" tag="110a" escape="">

@@ -25,21 +25,26 @@ from invenio.config import CFG_SITE_LANG, CFG_SITE_URL
 
 from invenio.search_engine import search_pattern
 
-def format_element(bfo, fvalue, tag, default = "0 Records found"):
+def format_element(bfo, fvalue, tag, items = "Records", default = ""):
     """ uses tag to fetch a tag from the given bfo, searches that value in
     fvalue, and outputs the number of records found, linked to a search
     for those recs.
     @param fvalue field to search
     @param tag tag from record to use to search
+    @param items string for X ITEMS found
     @param default returned if there are no results
     """
+    if not default:
+        default = "0 " + items + " found"
     out = ''
     reccnt = 0
-    pvalue = bfo.field(tag)
+    pvalue = '"' + bfo.field(tag) + '"'
     reccnt = len(search_pattern(p=pvalue, f=fvalue).tolist())
     if reccnt > 0:
-        out = "<a href=\"" + CFG_SITE_URL + "/search?f=" + fvalue + "&p=" + pvalue + "\">" +str(reccnt) + "</a> Records"
+        out = "<a href=\"" + CFG_SITE_URL + "/search?f=" + fvalue + "&p=" \
+    + pvalue + "\">" +str(reccnt) + "</a> " + items
         return out
     return default
+
 def escape_values(bfo):
     return 0

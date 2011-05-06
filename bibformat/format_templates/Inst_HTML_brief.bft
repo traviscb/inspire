@@ -6,7 +6,7 @@
 extension="" instances_separator=" & " filter_value=""
 subfields_separator=" " tag="110u" limit="" filter_subcode=""/> </td><td
 width="30%">
-<BFE_BFO_RECCNT prefix="" suffix=""  fvalue="affiliation" tag="110__u"/> </td></tr></table>
+<BFE_BFO_RECCNT prefix="" suffix=""  fvalue="affiliation" items="Papers" tag="110__u"/> </td></tr></table>
 
 
 <table><tr><td>
