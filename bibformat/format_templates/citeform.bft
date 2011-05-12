@@ -191,10 +191,10 @@ function openSrchWindow(winputid) {
 //alert(winputid);
 var searchvar = document.getElementById(winputid).value; 
 document.getElementById('targfield').value = winputid;
-var urlvar = "http://liblin9.slac.stanford.edu/search?ln=en&p=" + searchvar + "&action_search=Search&c=HEP&of=hpub";
+var urlvar = '<BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hpub';
 //alert(urlvar);
 
-//citefind = window.open("http://liblin9.slac.stanford.edu/search?ln=en&p=arXiv:1012.0299&action_search=Search&c=HEP&of=hpub","citefind", "left=500,top=20,width=600,height=700,toolbar=1,resizeable=1");
+//citefind = window.open(" <BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=arXiv:1012.0299&action_search=Search&c=HEP&of=hpub","citefind", "left=500,top=20,width=600,height=700,toolbar=1,resizeable=1");
 citefind = window.open(urlvar,"citefind","left=450px,top=20,width=600,height=700,toolbar=1,resizeable=1,scrollbars=1");
 //alert(citefind);
 citefind.focus();
@@ -225,7 +225,7 @@ citefind.focus();
  <div id="HB">
   <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
    <BFE_INSPIRE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/>
-  </a> &nbsp; &nbsp; <BFE_INSPIRE_ARXIV prefix="<a href=http://www.arxiv.org/pdf/" suffix=" target=blank />PDF</a> from arXiv " default="" escape="" category="yes" links="no" mirrors="no"/><BFE_INSPIRE_JOURNAL_LINKS prefix="" suffix="" default="" escape="" style="" suffix="" show_icons="no" default="" prefix="" separator="; "/>
+  </a> &nbsp; &nbsp; <BFE_INSPIRE_ARXIV prefix="<a href=http://www.arxiv.org/pdf/" suffix=" target=blank />PDF</a> from arXiv " default="" escape="" category="yes" links="no" mirrors="no"/> &nbsp; <BFE_INSPIRE_JOURNAL_LINKS prefix="" suffix="" default="" escape="" style="" target="blank" suffix="" show_icons="no" default="" prefix="" separator="  "/>
 <br />
   <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br />
   <BFE_REPORT_NUMBERS prefix=" " suffix=", " separator=", " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_TITLE prefix="" suffix="" separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_VOLUME prefix="" suffix="," separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_PAGE prefix="" suffix="," separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_YEAR prefix="" suffix="; " separator=" " nbMax="" default="" escape="" /><BFE_JOURNAL_PUBLICATION_DOI prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
@@ -245,9 +245,8 @@ citefind.focus();
 </textarea> <b><small>(Optional)</small></b> </TD></TR>    
 </table>
 
-<!-- <a href="http://liblin9.slac.stanford.edu/search?ln=en&p=&f=recid&action_search=Search&c=HEP&sf=&so=d&rm=&rg=25&of=hpub" target="_blank"> open search window with pubnote format</a> &nbsp; &nbsp; 
---!>
-<a href="http://liblin9.slac.stanford.edu/help/citeform" > <b> HELP</b> with this form</a>
+
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/citeform > <b> HELP</b> with this form</a>
 
 
 <br> 
@@ -256,6 +255,7 @@ citefind.focus();
 
 <hr width="25%" color="#6699FF" >
 <small> Click on <img src="/img/add.png"> to insert new references below existing reference</small>
+
 
 <br>
 <table id="t0"><tr id="tr0"><td></td><td><input type="image" id="t0" onclick="insertRowAfter(0); return false;" src="/img/add.png" alt="Search for Citation" ></td>
@@ -270,4 +270,3 @@ src="/img/search.png"  border=0 > Search for Citation</a>
 <input type="submit" name="submit" value="Send" /> 
 
 </form>
-<BFE_INSPIRE_PUBLI_INFO prefix="" suffix="" default="" escape="" markup="html" style="eu"/>
