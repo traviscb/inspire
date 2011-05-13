@@ -54,7 +54,7 @@ function insertRowAfter(caller_id) {
     var arr = new Array();
     arr = document.getElementsByName('cite');
     var row_counter = arr.length;  
-   alert(row_counter);
+    //alert(row_counter);
 
     //    row_counter += 1;
 
