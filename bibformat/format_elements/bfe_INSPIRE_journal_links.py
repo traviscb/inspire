@@ -27,7 +27,6 @@ or other similar information
 __revision__ = "$Id $"
 
 
-from urllib import quote
 from invenio.messages import gettext_set_language
 from invenio.config import CFG_SITE_URL
 
@@ -56,7 +55,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     for journal in journals:
         oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
         if oa_type:
-            final_style = style+' class = "'+oa_type+'"' 
+            final_style = style+' class = "'+oa_type+'"'
         else:
             final_style = style
         final_style = style + target
@@ -108,12 +107,13 @@ def _lookup_url_name(bfo, abbrev = ''):
 
 
 
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-
-
+# pylint: enable-msg=W0613
 

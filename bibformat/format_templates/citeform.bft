@@ -194,7 +194,7 @@ function openSrchWindow(winputid) {
      //alert(winputid);
      var searchvar = document.getElementById(winputid).value; 
      document.getElementById('targfield').value = winputid;
-     var urlvar = '<BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hpub';
+     var urlvar = '<BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hca';
      //alert(urlvar);
 
      citefind = window.open(urlvar,"citefind","left=450px,top=20,width=600,height=700,toolbar=1,resizeable=1,scrollbars=1");
@@ -254,7 +254,8 @@ function openSrchWindow(winputid) {
 </table>
 
 
-<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp; <input type="submit" name="submit" value="Send" />
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; 
+  &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
 
 <br> 
 
@@ -272,7 +273,8 @@ function openSrchWindow(winputid) {
 </td></tr></table>
 
 <BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
-<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a> &nbsp; <input type="submit" name="submit" value="Send" /> 
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a> &nbsp; 
+  &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" /> 
 
 </form>
 

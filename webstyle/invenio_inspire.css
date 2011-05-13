@@ -2634,11 +2634,15 @@ td.tips-rhs {
 
 /* citeform.bft and related */
 #citeform_link_box {
-    text-align: right;
+    padding: 5px 0px 5px 0px;
+}
+#citeform_link_span {
     background-color: #ffcc99;
+    padding: 5px 5px 5px 5px;
 }
 #citeform_link {
-    text-align: right;
+    text-align: left;
+    font-weight: bold;
     text-decoration: underline;
 }
 
