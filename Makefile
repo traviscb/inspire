@@ -26,10 +26,9 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-search-sort-field-configuration \
                  reset-inspire-useraccess-configuration \
                  reset-inspire-submission-configuration \
-                 reset-inspire-format-configuration \
                  reset-inspire-portalbox-configuration \
                  reset-inspire-format-configuration \
-		 reset-inspire-examples-searches 
+                 reset-inspire-examples-searches 
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
@@ -327,7 +326,6 @@ reset-inspire-index-configuration:
   type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
   PRIMARY KEY (id_bibrec,type)\
 ) ENGINE=MyISAM;" | $(BINDIR)/dbexec
->>>>>>> a10d0f5... websearch: search interface improvements
 
 reset-inspire-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
@@ -469,8 +467,9 @@ reset-inspire-format-configuration:
 	(19, 'RefWorks', 'xw', 'RefWorks.', 'text/xml', 1),\
 	(20, 'MODS', 'xo', 'Metadata Object Description Schema', 'application/xml', 1),\
 	(21, 'LaTeX (EU)', 'hlxe', 'LaTeX formatted reference (EU style)', 'text/html', 1),\
-	(22, 'LaTeX (US)', 'hlxu', 'LaTeX formatted reference (US Style)',\
-	'text/html', 1);" | $(BINDIR)/dbexec
+	(22, 'LaTeX (US)', 'hlxu', 'LaTeX formatted reference (US Style)', 'text/html', 1),\
+	(23, 'INSPIRE Citation Format', 'hca', 'Very brief citation format used to check citations.', 'text/html', 1),\
+	(24, 'INSPIRE Cite Submission Form', 'hcf', 'Citation submission form, used for user updates to citelists.', 'text/html', 0);" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_format" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 1, 130)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 2, 120)" | $(BINDIR)/dbexec

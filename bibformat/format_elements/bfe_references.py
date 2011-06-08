@@ -34,8 +34,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
     """
 
     references = bfo.fields("999C5", escape=1)
-    out = "<div id='citeform_link_box'><a id='citeform_link' href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hcite'+"'>Click here to update these references</a></div>"
-
+    out = "<div id='citeform_link_box'><span id='citeform_link_span'><a id='citeform_link' href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hcf'+"'>Update these references</a></span></div>"
     for reference in references:
         ref_out = ''
 
@@ -96,9 +95,13 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
     return out
 
+
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
+# pylint: enable-msg=W0613

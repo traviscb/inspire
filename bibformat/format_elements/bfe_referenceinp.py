@@ -53,7 +53,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
         inputid = 'c' + str(tableid)
 
         format_line = reference_prefix
-        # the onfocusout chgcite() js is called in the format_template citeform 
+        # the onfocusout chgcite() js is called in the format_template citeform
         ref_out = '<td><input type="text" name="cite" size="35" value="%s" id="%s" onChange="chgcite(this.id)"></td>' % (_first_nonempty([clean_report, clean_journal, clean_doi]),inputid)
 
         recid = _get_unique_recid_for(clean_journal, clean_report, clean_doi)
@@ -61,7 +61,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
             ref_out += '<td><small>' + format_record(recid, 'hs') + '</small></td>'
         else:
             ref_out += '<td><small>%s %s <a href="http://dx.doi.org/%s">%s</a> %s</small></td>' % (h_key, m_key, clean_doi, clean_doi, clean_journal)
-        #<input id="t%(tableid)s" type="button" onclick="insRow(this.id)" value = "V"> (the previous button for safekeeping) 
+        #<input id="t%(tableid)s" type="button" onclick="insRow(this.id)" value = "V"> (the previous button for safekeeping)
         format_line = """<table id="t%(tableid)s" ><tr id="tr%(tableid)s"><td>%(ordinal)s</td><td><input id="t%(tableid)s" type="image"  src="/img/add.png" onclick="insertRowAfter(%(tableid)s); return false;" value = "+"></td>%(ref_out)s</tr></table>""" % {'tableid': str(tableid), 'ref_out': ref_out, 'ordinal': ordinal}
         format_line += reference_suffix
 
@@ -74,14 +74,15 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
     return out
 
-
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
 def escape_values(bfo):
     """Should BibFormat escape this element's output?
 
     No.
     """
     return 0
-
+# pylint: enable-msg=W0613
 
 def _first_nonempty(ls):
     """Iterate through a list, return the first value != '' or else return ''"""
@@ -120,6 +121,5 @@ def _get_json_dump_of_codens():
     In our BFT we will want to have an onSubmit() handler which substitutes
     every short title for a coden; this makes the data for that available"""
 
-    import simplejson
     return '\n<script type="text/javascript">gCODENS = %s</script>\n' % simplejson.dumps(dict([(x['value'], x['key']) for x in get_kb_mappings('CODENS')]))
 
