@@ -318,6 +318,7 @@ def format_element(bfo, limit, separator='; ',
 
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
@@ -325,4 +326,3 @@ def escape_values(bfo):
     """
     return 0
 # pylint: enable-msg=W0613
-

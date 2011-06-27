@@ -254,8 +254,7 @@ function openSrchWindow(winputid) {
 </table>
 
 
-<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; 
-  &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
 <br> 
 
 
@@ -272,8 +271,7 @@ function openSrchWindow(winputid) {
 </td></tr></table>
 
 <BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
-<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a> &nbsp; 
-  &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" /> 
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections><b> HELP</b> with this form</a> &nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
 </form>
 
 

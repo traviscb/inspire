@@ -28,7 +28,7 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-submission-configuration \
                  reset-inspire-portalbox-configuration \
                  reset-inspire-format-configuration \
-                 reset-inspire-examples-searches 
+                 reset-inspire-examples-searches
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
