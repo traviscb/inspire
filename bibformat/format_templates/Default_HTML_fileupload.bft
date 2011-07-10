@@ -38,44 +38,19 @@ function changec(){
 </script>
 </head>
 
-<form name="fulltext_upload" method="post" onSubmit="return changec();"
-action="<BFE_SERVER_INFO>/upload/">
+
 
 
 <div id="detailedrecordshortreminder">
 <BFE_OUTPUT_FORMAT of="hs">
-<input type="hidden" name="recid" id="recid" value="<BFE_RECORD_ID>">
 </div>
+
+
+
 
 <div class="user_form">
-<table>
-
-<tr id="file_upload" class="form_label_required" ><td class="left">Share your thesis via INSPIRE</td>
-<td class="right"><input type="file" name="filedata" /></td</tr>       
-<tr></tr>
-</table>
-<table>
-<tr class="form_label_required"><td class=left>* Your Email</td>
-<td class=right>
-<input size=35 name="username" id="username"></td></tr>
-
-<tr class="form_label"><td class=left>Your Name</td>
-<td class=right><INPUT size=35 name=realname id=realname></td></tr>
-
-<tr class="form_label"><td class=left>Your Advisor</td>
-<td class=right><INPUT size=35 name=Advisor id=Advisor></td></tr>
-
-<tr class="form_label"><td class=left>Comments</td>
-<td class=right><textarea name="usercomment" id=usercomment rows="2"
-cols="35" wrap="virtual"></textarea></td></tr>
-
-
-
-<tr><td></td><td><input type="submit"
-name="submit" value="Upload My Paper" class="formbutton" /></td>
-</table>
+<BFE_INSPIRE_thesis_form onsubmit="return changec();" action='<BFE_SERVER_INFO var="CFG_SITE_URL">/upload'>
 </div>
-</form>
 
 
 <div class="note">
@@ -91,4 +66,3 @@ Please contact us at
 <BFE_SERVER_INFO var="CFG_SITE_SUPPORT_EMAIL"></a> if you have questions. 
 </div>
 
-<br>
