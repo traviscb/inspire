@@ -2724,11 +2724,40 @@ td.tips-rhs {
 .form_label_required {
     font-weight: normal;
     font-size: small;
-    color: red;
+    color: #369;
 }
 .form_label_optional {
     font-weight: normal;
     font-size: small;
     color: black;
 }
+
+
+div.user_form{
+    border-bottom: 2px solid #ccc;
+    margin-top:10px;
+    margin-bottom: 5px;
+    padding:10px;
+}
+
+.user_form .left{
+    text-align:right;
+}
+
+.user_form .right{
+    text-align:left;
+}
+
+.user_form table{
+    border-collapse:collapse;
+    cell-spacing:0;
+    cell-padding:4px;
+}
+
+tr#file_upload{
+    background:#fc9;
+    border:1px solid #369;
+}
+
+
 /* end of inspire.css */

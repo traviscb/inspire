@@ -1,0 +1,68 @@
+<name>Default HTML File Upload</name><description>For uploading of
+fulltext files</description>
+
+<head>
+<script type="text/javascript">
+
+function changec(){
+
+    function email_valid_p() {
+        // test if valid email address, must have @ and .
+        var checkStr = document.getElementById('username').value;
+        var checkEmail = "@.";
+        var EmailAt = false;
+        var EmailPeriod = false;
+        var ch = '';
+        for (i = 0;  i < checkStr.length;  i++) {
+            ch = checkStr.charAt(i);
+            for (j = 0;  j < checkEmail.length;  j++) {
+                if (ch == checkEmail.charAt(j) && ch == "@")
+                    EmailAt = true;
+                if (ch == checkEmail.charAt(j) && ch == ".")
+                    EmailPeriod = true;
+                if (EmailAt && EmailPeriod)
+                    break;
+            }
+            // if both the @ and . were in the string
+        }
+        return (EmailAt && EmailPeriod);
+    }
+    if (!email_valid_p()) {
+        alert("The \"email\" field must not be empty, and must contain an \"@\" and a \".\".");
+        document.referenceinp.username.focus();
+        return false;
+    }
+
+}
+
+</script>
+</head>
+
+
+
+
+<div id="detailedrecordshortreminder">
+<BFE_OUTPUT_FORMAT of="hs">
+</div>
+
+
+
+
+<div class="user_form">
+<BFE_INSPIRE_thesis_form onsubmit="return changec();" action='<BFE_SERVER_INFO var="CFG_SITE_URL">/upload'>
+</div>
+
+
+<div class="note">
+We are currently accepting fulltext files for Theses.  Your file
+should be PDF, and less than 100Mb.  Only submissions from the author are
+currently accepted.  
+<br />
+Note that your file will not be visible until an editor has verified it. We will let you know if there is a
+problem.
+<br />
+Please contact us at
+<a href="mailto:<BFE_SERVER_INFO var=CFG_SITE_SUPPORT_EMAIL>">
+<BFE_SERVER_INFO var="CFG_SITE_SUPPORT_EMAIL"></a> if you have questions. 
+</div>
+
