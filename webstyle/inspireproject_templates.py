@@ -11,13 +11,13 @@ class Template:
         """Establish some variables we can use throughout"""
         self.site_url = invenio.config.CFG_SITE_URL
         self.javascript = [ # prerequisites for hotkeys, autocomplete
-                           'jquery-1.4.4.js', 
+                           'jquery-1.4.4.js',
                            # FIXME we should be using a locally cached version of jquery-1.4.4... shouldn't we?
                            #'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js',
                            # FIXME we should be using locally cached version of jquery-ui libs... shouldn't we?
                            #'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js',
                            # we include this in the Makefile.am at root, but maybe that wasn't a good idea?
-                           'jquery-ui.min.js', 
+                           'jquery-ui.min.js',
                            # FIXME we should be using locally cached version of jquery hotkeys... but this version!
                            #'https://github.com/jeresig/jquery.hotkeys/raw/master/jquery.hotkeys.js',
                            # we include this in the root Makefile.am too, but it's also not clear if it's a good idea
@@ -78,7 +78,7 @@ class Template:
 #       'offset'                 : str(offset),
 #       'paper_title'            : title,
 #      }
-              
+
     def tPara(self, instr, indent=0, tagas=''):
         """Output an HTML paragraph"""
         ostr  = ' '*indent + "<p id=%s>\n" % tagas

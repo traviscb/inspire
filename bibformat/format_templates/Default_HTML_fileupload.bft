@@ -49,7 +49,7 @@ function changec(){
 
 
 <div class="user_form">
-<BFE_INSPIRE_thesis_form onsubmit="return changec();" action='<BFE_SERVER_INFO var="CFG_SITE_URL">/upload'>
+<BFE_INSPIRE_thesis_form onsubmit="return changec();">
 </div>
 
 

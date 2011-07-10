@@ -24,7 +24,7 @@ __revision__ = "$Id$"
 
 from invenio.config import CFG_SITE_SUPPORT_EMAIL, CFG_SITE_URL
 
-def format_element(bfo, action="", onsubmit=""):
+def format_element(bfo,onsubmit=""):
     """
     Creates a Thesis Submission form for the record, after checking some variables
     @param onsubmit: a js action to be taken onSubmit
@@ -34,7 +34,7 @@ def format_element(bfo, action="", onsubmit=""):
 
     recid = bfo.control_field("001")
 
-    action = CFG_SITE_URL + "/inspire/thesis_upload"
+    action = CFG_SITE_URL + "/inspire/file_upload"
 
     form = '''
 <form name="fulltext_upload" method="post" onSubmit="%s"

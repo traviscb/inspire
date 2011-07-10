@@ -36,6 +36,7 @@ from invenio.access_control_engine import acc_authorize_action
 from invenio.bibedit_engine import perform_request_ajax, perform_request_init, \
     perform_request_newticket, perform_request_compare
 from invenio.bibedit_utils import json_unicode_to_utf8
+from invenio.bibtask import task_low_level_submission
 from invenio.config import CFG_SITE_LANG, CFG_SITE_URL, CFG_SITE_RECORD
 from invenio.messages import gettext_set_language
 from invenio.search_engine import guess_primary_collection_of_a_record
@@ -44,6 +45,7 @@ from invenio.webinterface_handler import WebInterfaceDirectory, wash_urlargd
 from invenio.webpage import page
 from invenio.webuser import collect_user_info, getUid, page_not_authorized
 
+
 navtrail = (' <a class="navtrail" href=\"%s/inspire\">INSPIRE Utilities</a> '
             ) % CFG_SITE_URL
 
@@ -51,7 +53,7 @@ navtrail = (' <a class="navtrail" href=\"%s/inspire\">INSPIRE Utilities</a> '
 class WebInterfaceInspirePages(WebInterfaceDirectory):
     """Defines the set of /inspire pages."""
 
-    _exports = ['', '/', 'thesis_upload']
+    _exports = ['', '/', 'file_upload']
 
     def __init__(self, recid=None):
         self.recid = recid
@@ -75,19 +77,23 @@ class WebInterfaceInspirePages(WebInterfaceDirectory):
                                     body = self.template.index(),
                                     req = request)
 
-    def thesis_upload(self, request, form):
+    def file_upload(self, request, form):
         """Accept a stream of bytes for the disk and some metadata for the DB"""
         # bytes coming in off of filedata
         import tempfile, os
         # other form elements: username, recid, etc.
         bytes = form.get('filedata', None)
         if bytes:
-            fd, fpath = tempfile.mkstemp(prefix='inspire_thesis_upload')
-            os.write(fd, bytes.value) 
+            fd, fpath = tempfile.mkstemp(prefix='inspire_file_upload')
+            os.write(fd, bytes.value)
             os.close(fd)
             #SUCCESS: TODO:
-            # * create marcxml to send to bibupload 
-            # * create ticket w/ link to bibdoc web admin 
+            # * create marcxml to send to bibupload
+            marc_fd, marc_fpath = tempfile.mkstemp(prefix='inspire_file_upload', suffix="marcxml")
+
+            task_low_level_submission('bibupload', 'file_upload', '-P', '5', '-c', '%s' % marcfpath)
+
+            # * create ticket w/ link to bibdoc web admin
             return invenio.webpage.page(title = "File written to disk",
                                         body = fpath,
                                         req = request)
