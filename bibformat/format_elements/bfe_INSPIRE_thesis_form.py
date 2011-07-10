@@ -40,6 +40,7 @@ def format_element(bfo,onsubmit=""):
 <form name="fulltext_upload" method="post" onSubmit="%s"
 action="%s" enctype="multipart/form-data">
 <input type="hidden" name="recid" id="recid" value="%s" />
+<input type="hidden" name="filename" id="filename" value="" />
 <table>
 <tr id="file_upload" class="form_label_required" ><td class="left">Share
 your thesis</td>
@@ -51,8 +52,6 @@ your thesis</td>
 <input size=35 name="username" id="username"></td></tr>
 <tr class="form_label"><td class=left>Your Name</td>
 <td class=right><INPUT size=35 name=realname id=realname></td></tr>
-<tr class="form_label"><td class=left>Your Advisor</td>
-<td class=right><INPUT size=35 name=Advisor id=Advisor></td></tr>
 <tr class="form_label"><td class=left>Comments</td>
 <td class=right><textarea name="usercomment" id=usercomment rows="2"
 cols="35" wrap="virtual"></textarea></td></tr>

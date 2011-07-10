@@ -6,6 +6,7 @@ fulltext files</description>
 
 function changec(){
 
+
     function email_valid_p() {
         // test if valid email address, must have @ and .
         var checkStr = document.getElementById('username').value;
@@ -27,9 +28,10 @@ function changec(){
         }
         return (EmailAt && EmailPeriod);
     }
+    document.fulltext_upload.filename.value = document.getElementById('filedata').value
     if (!email_valid_p()) {
         alert("The \"email\" field must not be empty, and must contain an \"@\" and a \".\".");
-        document.referenceinp.username.focus();
+        document.fulltext_upload.username.focus();
         return false;
     }
 
