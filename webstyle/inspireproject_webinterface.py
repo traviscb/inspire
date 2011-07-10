@@ -79,14 +79,19 @@ class WebInterfaceInspirePages(WebInterfaceDirectory):
         """Accept a stream of bytes for the disk and some metadata for the DB"""
         # bytes coming in off of filedata
         import tempfile, os
-        bytes = form.get('filedata', '')
+        # other form elements: username, recid, etc.
+        bytes = form.get('filedata', None)
         if bytes:
             fd, fpath = tempfile.mkstemp(prefix='inspire_thesis_upload')
-            os.write(fd, bytes)
+            os.write(fd, bytes.value) 
             os.close(fd)
+            #SUCCESS: TODO:
+            # * create marcxml to send to bibupload 
+            # * create ticket w/ link to bibdoc web admin 
             return invenio.webpage.page(title = "File written to disk",
                                         body = fpath,
                                         req = request)
+        # FAILURE: file data wasn't present (the form is unvalidated?)
         return invenio.webpage.page(title = "no bytes to write", body = "oops, lol", req=request)
 
     def __call__(self, req, form):
