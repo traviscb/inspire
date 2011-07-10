@@ -2754,6 +2754,16 @@ div.user_form{
     cell-padding:4px;
 }
 
+
+.user_form td{
+    padding:3px;
+}
+
+
+#file_upload td{
+    padding:10px;
+}
+
 tr#file_upload{
     background:#fc9;
     border:1px solid #369;

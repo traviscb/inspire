@@ -38,15 +38,14 @@ def format_element(bfo, action="", onsubmit=""):
 
     form = '''
 <form name="fulltext_upload" method="post" onSubmit="%s"
-action="%s" enctype="multipart/form-data" size=35>
+action="%s" enctype="multipart/form-data">
 <input type="hidden" name="recid" id="recid" value="%s" />
 <table>
 <tr id="file_upload" class="form_label_required" ><td class="left">Share
 your thesis</td>
-<td class="right"><input type="file" name="filedata" /></td</tr>
+<td class="right"><input type="file" name="filedata" size="35" /></td></tr>
 <tr></tr>
-</table>
-<table>
+
 <tr class="form_label_required"><td class=left>* Your Email</td>
 <td class=right>
 <input size=35 name="username" id="username"></td></tr>
@@ -58,7 +57,7 @@ your thesis</td>
 <td class=right><textarea name="usercomment" id=usercomment rows="2"
 cols="35" wrap="virtual"></textarea></td></tr>
 <tr><td></td><td><input type="submit"
-name="submit" value="Upload My Paper" class="formbutton" /></td>
+name="submit" value="Upload My Thesis" class="formbutton" /></td>
 </table>
 ''' % (onsubmit,action,recid)
 
@@ -71,8 +70,7 @@ name="submit" value="Upload My Paper" class="formbutton" /></td>
 
     # not a thesis:
     return '''
-    <div class="note">This paper does not appear to be a thesis and Thesis
-    submission is not available for this paper.   If you believe this is
+    <div class="note">This paper does not appear to be a thesis, so submission is not available for this paper.   If you believe this is
     an error, please contact us at <a href="mailto:%s">%s</a>''' % (CFG_SITE_SUPPORT_EMAIL, CFG_SITE_SUPPORT_EMAIL)
 
 
