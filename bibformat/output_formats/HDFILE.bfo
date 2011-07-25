@@ -1,4 +1,5 @@
 tag 980__a :
 INSTITUTION --- Inst_HTML_files.bft
+CONFERENCES --- Conf_HTML_files.bft
 
 default: Default_HTML_files.bft

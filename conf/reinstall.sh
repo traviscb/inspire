@@ -210,11 +210,16 @@ if [ $G_DB_RESET == 'TRUE' ]; then
            make get-test-inst
            make convert-test-inst
            sudo -u $CFG_INVENIO_USER make upload-test-inst
+           make get-test-conf
+           make convert-test-conf
+           sudo -u $CFG_INVENIO_USER make upload-test-conf
        else
            make get-test-marc
            sudo -u $CFG_INVENIO_USER make upload-test
            make get-test-inst-marc
            sudo -u $CFG_INVENIO_USER make upload-test-inst
+           make get-test-conf-marc
+           sudo -u $CFG_INVENIO_USER make upload-test-conf
        fi
 
        

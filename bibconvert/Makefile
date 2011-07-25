@@ -16,6 +16,14 @@ FULL_INST_BASE = inst_recs
 FULL_INST_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.xml
 FULL_INST_MARC_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.marcxml
 
+TEST_CONF_BASE = conf_test_recs
+TEST_CONF_URL = ${FTP_LOC}testset/${TEST_CONF_BASE}.xml
+TEST_CONF_MARC_URL = ${FTP_LOC}testset/${TEST_CONF_BASE}.marcxml
+
+FULL_CONF_BASE = conf_recs
+FULL_CONF_URL = ${FTP_LOC}inst/${FULL_CONF_BASE}.xml
+FULL_CONF_MARC_URL = ${FTP_LOC}inst/${FULL_CONF_BASE}.marcxml
+
 
 XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl oaiarXiv2inspire_categories.xml inst2marc.xsl conf2marc.xsl
 TEST_TARGETS = load-small-sample-of-records
@@ -29,7 +37,7 @@ test: ${TEST_TARGETS}
 	@echo "Done."
 
 clean:
-	@rm -f ${TEST_BASE}.*xml ${TEST_INST_BASE}.*xml ${FULL_INST_BASE}.*xml
+	@rm -f ${TEST_BASE}.*xml ${TEST_INST_BASE}.*xml ${FULL_INST_BASE}.*xml ${TEST_CONF_BASE}.*xml ${FULL_CONF_BASE}.*xml
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
@@ -39,6 +47,9 @@ load-test-sample-of-records: get-test convert-test upload-test
 
 convert-test-sample-of-inst: get-test-inst convert-test-inst
 load-test-sample-of-inst: get-test-inst convert-test-inst upload-test-inst
+
+convert-test-sample-of-conf: get-test-conf convert-test-conf
+load-test-sample-of-conf: get-test-conf convert-test-conf upload-test-conf
 
 
 
@@ -106,6 +117,34 @@ upload-test-inst:
 	$(BINDIR)/bibupload -ir /tmp/${TEST_INST_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
+
+### Conferences test targets
+
+get-test-conf:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(TEST_CONF_BASE).xml
+	wget $(TEST_CONF_URL)
+	@echo "* Done.  Please run 'make convert-test-conf' now."
+
+get-test-conf-marc:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(TEST_CONF_BASE).marcxml
+	wget $(TEST_CONF_MARC_URL)
+	@echo "* Done.  Please run 'make upload-test-conf' now."
+
+convert-test-conf:
+	@echo -n "* Converting small CONF record sample..."
+	$(BINDIR)/bibconvert -c `pwd`/conf2marc.xsl < ${TEST_CONF_BASE}.xml > ${TEST_CONF_BASE}.marcxml
+	@echo -n " done."
+	@echo "Please run 'make upload-test-conf' now."
+
+upload-test-conf:
+	@echo "* Uploading converted files..."
+	cp ${TEST_CONF_BASE}.marcxml /tmp
+	chmod a+r /tmp/${TEST_CONF_BASE}.marcxml
+	$(BINDIR)/bibupload -ir /tmp/${TEST_CONF_BASE}.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 ####
 ## Get the full 9000 record institution set.  Should rarely if ever be used.
 
@@ -132,6 +171,36 @@ upload-inst-full:
 	cp ${FULL_INST_BASE}.marcxml /tmp
 	chmod a+r /tmp/${FULL_INST_BASE}.marcxml
 	$(BINDIR)/bibupload -ir /tmp/${FULL_INST_BASE}.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+
+
+####
+## Get the full conference set.  Should rarely if ever be used.
+
+get-conf-full:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(FULL_CONF_BASE).xml
+	wget $(FULL_CONF_URL)
+	@echo "* Done.  Please run 'make convert-conf-full' now."
+
+get-conf-marc-full:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(FULL_CONF_BASE).marcxml
+	wget $(FULL_CONF_MARC_URL)
+	@echo "* Done.  Please run 'make upload-conf-full' now."
+
+convert-conf-full:
+	@echo -n "* Converting full conf record set..."
+	$(BINDIR)/bibconvert -c `pwd`/conf2marc.xsl < ${FULL_CONF_BASE}.xml > ${FULL_CONF_BASE}.marcxml
+	@echo -n " done."
+	@echo "Please run 'make upload-conf-full' now."
+
+upload-conf-full:
+	@echo "* Uploading converted files..."
+	cp ${FULL_CONF_BASE}.marcxml /tmp
+	chmod a+r /tmp/${FULL_CONF_BASE}.marcxml
+	$(BINDIR)/bibupload -ir /tmp/${FULL_CONF_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
 # to support historical scripts

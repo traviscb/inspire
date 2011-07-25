@@ -3,7 +3,7 @@
 include ../config.mk
 -include ../config-local.mk
 
-CFGFILES = citation.cfg wrd.cfg inst_papers.cfg
+CFGFILES = *.cfg
 CFGDIR = $(ETCDIR)/bibrank
 
 all:

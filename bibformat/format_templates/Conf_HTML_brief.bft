@@ -1,0 +1,28 @@
+<name>Conf HTML Brief</name>
+<description>Default HTML brief format for Conferences</description>
+<!C-START REC 11.Brief--!>
+<div class="record_body">
+
+<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+
+<BFE_FILTER_FIELD prefix="<b>" suffix="</b>" default="" escape=""
+extension="" instances_separator=" & " filter_value=""
+subfields_separator=" " tag="111a" limit="" filter_subcode=""/></a>
+
+<br />
+
+
+<BFE_FIELD prefix=""  instances_separator=" "
+ suffix=": "  tag="111d" escape="">    
+<BFE_FIELD prefix=""   instances_separator=" "
+ suffix=""  tag="111c" escape=""> 
+
+<br />
+
+<BFE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="<br />"/>
+
+
+<BFE_BFO_RECCNT prefix="<span class='moreinfo'>" suffix="</span>"
+fvalue="773__w" item="Paper" plural="Papers"
+printtag="from" tag="111__g" collection="HEP"/>
+</div>

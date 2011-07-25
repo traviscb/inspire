@@ -173,7 +173,7 @@
 	      <datafield tag="773" ind1=" " ind2=" ">
 		<xsl:if test="string(./conf-code)">
 		  <subfield code="w">
-		    <xsl:value-of select="normalize-space(./conf-code)"/>
+		    <xsl:value-of select="normalize-space(translate(./conf-code,'/-.',''))"/>
 		  </subfield>
 		</xsl:if>
 		<xsl:if test="string(./conf-page)">

@@ -1,0 +1,9 @@
+<name>Conf HTML files</name>
+<description>Outputs the available files for an Conf</description>
+
+<ul class="detailedrecordfiles">
+<li>
+<BFE_BFO_RECCNT tag="111__g"  fvalue="773__w" prefix="" suffix=""
+item="Paper" plural="Papers" printtag="_(from)_" default=" None" escape="" />
+</li>
+</ul>

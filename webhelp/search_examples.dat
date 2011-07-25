@@ -8,4 +8,7 @@ INSERT into example (type,body) values
 ("Institutions", "find address menlo park"),
 ("Institutions", "find institution CERN"),
 ("Institutions", "country:DE")
+("Conferences", "Las Vegas"),
+("Conferences", "SUSY08"),
+
 ;

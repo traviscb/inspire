@@ -120,6 +120,13 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO tag (id,name,value) VALUES (69, 'region code','371__f')" | $(BINDIR)/dbexec
 	echo "INSERT INTO tag (id,name,value) VALUES (70, 'state/province','410__g')" | $(BINDIR)/dbexec
 	echo "INSERT INTO tag (id,name,value) VALUES (71, 'institution name','110__u')" | $(BINDIR)/dbexec
+### conf values
+	echo "INSERT INTO tag (id,name,value) VALUES (72, 'conference info','111__%')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (73, 'place','111__c')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (74, 'series','411__a')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (75, 'xplace','270__b')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (76, 'date','111__x')" | $(BINDIR)/dbexec
+
 	@echo ">>> Resetting table field:"
 	echo "TRUNCATE field" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (1, 'any field', 'anyfield')" | $(BINDIR)/dbexec
@@ -153,6 +160,12 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (28, 'city', 'city')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (29, 'region', 'region')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (30, 'institution name', 'institutionname')" | $(BINDIR)/dbexec
+### conf fields
+### using any field at the moment
+	echo "INSERT INTO field (id,name,code) VALUES (31, 'series', 'series')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (32, 'place', 'place')" | $(BINDIR)/dbexec
+
+
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
@@ -208,7 +221,7 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (8, 54, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (9, 51, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (10, 60, 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (10, 43, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (10,	43, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (11, 26, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (12, 36, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (13, 56, 100)" | $(BINDIR)/dbexec
@@ -237,8 +250,17 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (27, 67, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (28, 68, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (29, 69, 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (29, 70, 90)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 71, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (29,	70, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30,	71, 90)" | $(BINDIR)/dbexec
+#
+#  conf fields
+#
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1,72, 110)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1,73, 1100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (32,73, 1100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (32,75, 1100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (31,74, 1100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (10, 76, 80)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-field-configuration."
 
 reset-inspire-index-configuration:
@@ -293,7 +315,11 @@ reset-inspire-index-configuration:
 # for kbs
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (18, 7)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-index-configuration."
-
+#conf index
+# using anyfield
+	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (19, 'series', 'series', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (19, 31)" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 32)" | $(BINDIR)/dbexec
 	echo "CREATE TABLE IF NOT EXISTS idxPAIR17F (\
   id mediumint(9) unsigned NOT NULL auto_increment,\
   term varchar(100) default NULL,\
@@ -380,17 +406,21 @@ reset-inspire-collection-configuration:
 	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (1, 'HEP', 'collection:HEP or 970__a:\'SPIRES\'', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (2, 'Institutions',	'collection:INSTITUTION', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (3, 'Conferences',	'collection:CONFERENCES', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 2, 110)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (2, 3, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_rnkMETHOD VALUES (3, 4, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" |$(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (2, 'en', 'ln', 'Institutions')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (3, 'en', 'ln', 'Conferences')" | $(BINDIR)/dbexec
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectiondetailedrecordpagetabs" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (1, 'metadata;references;citations;files;plots')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (2, 'metadata')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (3, 'metadata')" | $(BINDIR)/dbexec
 
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
@@ -402,9 +432,11 @@ reset-inspire-rank-configuration:
 	echo "INSERT INTO rnkMETHOD VALUES (1,'wrd','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
 	echo "INSERT INTO rnkMETHOD VALUES (2,'citation','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
 	echo "INSERT INTO rnkMETHOD VALUES (3,'inst_papers','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHOD VALUES (4,'conf_papers','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
 	echo "INSERT INTO rnkMETHODNAME VALUES (1, 'en', 'ln', 'word similarity')" |  $(BINDIR)/dbexec
 	echo "INSERT INTO rnkMETHODNAME VALUES (2, 'en', 'ln', 'times cited')" |  $(BINDIR)/dbexec
 	echo "INSERT INTO rnkMETHODNAME VALUES (3, 'en', 'ln', 'papers in HEP')" |  $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHODNAME VALUES (4, 'en', 'ln', 'papers in HEP')" |  $(BINDIR)/dbexec
 
 reset-inspire-portalbox-configuration:
 	@echo ">>> Resetting collection portalboxes:"
@@ -468,6 +500,25 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
+##
+##
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
 		# now update portalbox value with placeholder text
 	echo "UPDATE portalbox SET body=' ' WHERE id=2"|$(BINDIR)/dbexec
 		## and now update portalbox values with RSS feed material
@@ -502,6 +553,11 @@ reset-inspire-search-sort-field-configuration:
 	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (2, 27, NULL, 'sew', 25, 0)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (2, 30, NULL, 'sew', 100, 0)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-inst-search-sort-field-configuration."
+	@echo ">>> Adding conf search/sort field configuration:"
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (3, 25, NULL, 'sew', 50, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (3, 26, NULL, 'sew', 10, 0)" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-inst-search-sort-field-configuration."
+
 
 
 reset-inspire-useraccess-configuration:
@@ -560,8 +616,8 @@ reset-inspire-format-configuration:
 	(26, 'text CV', 'htcv', 'A plaintext CV', 'text/html', 1),\
 	(27, 'HTML CV', 'hcv', 'A CV with hyperlinks', 'text/html', 1);" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_format" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 1, 130)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 2, 120)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 1, 130)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 2, 120)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 18, 110)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 8, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 21, 90)" | $(BINDIR)/dbexec
@@ -570,8 +626,12 @@ reset-inspire-format-configuration:
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 19, 10)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-format-configuration."
 	@echo ">>> Adding format configuration for inst:"
-	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 1, 130)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 2, 120)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 1, 130)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 2, 120)" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-inst-format-configuration."
+	@echo ">>> Adding format configuration for conf:"
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (3, 1, 130)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (3, 2, 120)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-inst-format-configuration."
 
 reset-inspire-examples-searches:

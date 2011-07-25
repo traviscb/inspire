@@ -49,6 +49,7 @@ def format_element(bfo, fvalue, tag, item = "Record", printtag = "",
     out = ''
     reccnt = 0
     tagvalue = bfo.field(tag)
+    text = plural
     if tagvalue:
         if printtag:
             text = " " + printtag + " " + tagvalue
